@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section  head
+{
+    <link rel="stylesheet" type="text/css" href="~/Content/base.css"> 
+    <script type="text/javascript" src="~/Scripts/core/knockout.binding.js"></script>  
+
+    <style type="text/css">
+        .div_edit { padding:3px;border:1px solid #8DB2E3; margin-bottom:2px; background-color:#E0ECFF;height:26px;}
+.div_edit a { float: left;}
+    </style>
+    <!--编辑菜单按钮-->
+
+}
+<div class="div_search">
+    <fieldset title="查询条件">
+        <legend> 查询条件 </legend>
+        <table>
+            <tr>
+                <td>
+                    <label>菜单名称</label>
+                    <input type="text" class="easyui-validatebox" data-bind="value:queryParams.menuName" maxlength="10" style="height:12px;margin:0 5px 0 5px" />
+                </td> 
+                <td>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search'" data-bind="click:search" >查询</a>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+
+<div class="div_edit">
+    <a id="btn_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" data-bind="click:add">增加</a>
+    <a id="btn_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" data-bind="click:edit">编辑</a>
+    <a id="btn_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" data-bind="click:del">删除</a>
+    <a id="btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" data-bind="click:save">保存</a>
+    <a id="btn_undo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" data-bind="click:undo">取消</a>
+</div>
+<!--数据展示 -->
+<table id="dataGrid"  data-bind="treegrid:grid"></table>
+
+
+<script type="text/html" id="actionedit-template">  
+        
+        <div class="div_edit">
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" data-bind="click:search">刷新</a>
+            <a id="btn_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" data-bind="click:add">增加</a>
+            <a id="btn_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" data-bind="click:edit">编辑</a>
+            <a id="btn_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" data-bind="click:del">删除</a>
+            <a id="btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" data-bind="click:save">保存</a>
+            <a id="btn_undo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" data-bind="click:undo">取消</a>
+        </div>
+        <table id="action_datagrid" data-bind="datagrid:grid"></table> 
+</script>
+
+<script type="text/javascript" src="/Areas/Sys/ViewModel/sys_action.js"></script>
+<!--加载Ko viewModel --->
+<script type="text/javascript" src="/Areas/Sys/ViewModel/sys_menu.js"></script>
+<script type="text/javascript">
+
+    ko.applyBindings(new viewModle_bz.sys_menu('@Html.Raw(User.Identity.Name)'));
+</script>
+
+
+

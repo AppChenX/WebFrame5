@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>用户登录</title>
+    <link href="~/Content/login.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/knockout-3.4.2.js"> </script>
+    <script type="text/javascript" src="~/Scripts/bz/ViewModel/login.js">  </script>
+    <script type="text/javascript" src="~/Scripts/jquery.md5.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.cookie.min.js"></script>
+ 
+</head>
+<body >
+    <div class="sec_div">
+
+        <div class="div_log"><img src="~/Content/Images/login/logo.png" /></div>
+        <div class="div_title">测试系统</div>
+        <div class="message"></div>
+        <table border="0" style="width:300px;">
+            <tr>
+                <td style="padding-bottom: 5px;width:50px; text-align:left"> 用户名</td>
+                <td colspan="2">
+                    <input    class="login" type="text" data-bind="value:userName  " />
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-bottom: 5px;width:50px;text-align:left"> 密码</td>
+                <td>
+                    <input   class="login" type="password" data-bind="value:userPwd" />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-bottom: 5px;width:55px;text-align:left">验证码</td>
+                <td><input type="text" id="txtCode" class="login" data-bind="value:imgCode,event: {keydown:keyfun},keypressBubble:false" /></td>
+                <td><img style="cursor: pointer;" src="/Account/VerifCode" alt="验证码" data-bind="click:function(data,event){ refreshCode(data,event); }" /></td>
+            </tr> 
+            <tr>
+                <td></td>
+                <td style="float:left; text-align:left" >
+                   <div style="float:left "><input type="button" value="登录" class="login_button" data-bind="click:login, clickBubble: false" /></div> 
+                   <div style="float:left; margin-left:15px"><input type="button" value="重置" class="reset_botton" data-bind="click:reset, clickBubble: false" /></div> 
+</td> 
+                <td>@Html.ActionLink("忘记密码", "ForgetPwd","Account")</td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        
+
+        //$(function () {
+        //    var img = $.cookie('imgCode');
+
+        //    console.log('imgcode:' + img);
+        //});
+      
+       // console.log($.md5('123456'));//e10adc3949ba59abbe56e057f20f883e
+        $(".login[type=text]:eq(0)").focus().select();
+        ko.applyBindings(CH.viewModel.logInOut);
+
+
+       
+    </script>
+
+
+
+</body>
+</html>

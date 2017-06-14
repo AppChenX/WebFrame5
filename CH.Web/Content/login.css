@@ -1,0 +1,62 @@
+﻿body {
+    font-size: 12px;
+    font-family: Verdana, Geneva, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: url('../Content/Images/login/login_bg.jpg');
+}
+
+.sec_div {
+    margin: 0 auto;
+    background: url('../Content/Images/login/login_panel.png');
+    margin-top: 10%;
+    padding-left: 300px;
+    padding-top: 110px;
+    position: relative;
+    width: 330px;
+    height: 240px;
+}
+
+.div_title {
+    position: absolute;
+    top: 40px;
+    left: 320px;
+    font-size: 25px;
+    font-weight: 800;
+    color: #0074a6;
+}
+
+.div_log {
+    position: absolute;
+    left: 50px;
+    top: 80px;
+}
+
+.login {
+    width: 150px;
+    border: 1px solid #7fb5c1;
+    height: 20px;
+   /* vertical-align: text-bottom;*/
+}
+
+.login_button, .reset_botton {
+    width: 58px;
+    height: 26px;
+    /* line-height: 25px;
+    margin-left: 45px;
+    margin-top: 10px;*/
+   background: url('../Content/Images/login/login1.jpg')
+}
+
+.reset_botton {
+    background: url('../Content/Images/login/reset.jpg');
+}
+
+.message {
+    position: absolute;
+    bottom: 90px;
+    left: 312px;
+    color: red;
+}

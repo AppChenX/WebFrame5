@@ -1,0 +1,297 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section  head
+{
+    <link rel="stylesheet" type="text/css" href="~/Content/Css/base.css"> 
+}
+<div class="div_search">
+    <fieldset title="查询条件">
+        <legend> 查询条件 </legend>
+        <table>
+            <tr>
+                <td>
+                    <label>用户ID</label>
+                    <input type="text" id="userId" class="easyui-validatebox" maxlength="10" style="height:12px;margin:0 5px 0 5px" />
+                </td>
+                <td>
+                    <label>用户名</label>
+                    <input type="text" id="userName" class="easyui-validatebox" maxlength="10" style="height:12px;margin:0 5px 0 5px" />
+                </td>
+                <td>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+
+<div class="div_edit">
+    <a id="btn_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">增加</a>
+    <a id="btn_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">编辑</a>
+    <a id="btn_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">删除</a>
+    <a id="btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+    <a id="btn_undo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'">取消</a>
+</div>
+<!--数据展示 -->
+<table id="dataGrid" style="width:100% "></table>
+
+<script type="text/javascript">
+    $("#dataGrid").datagrid({
+        title: "用户管理",
+        rownumbers: true,
+        idField: 'userId',
+        border: false,
+        striped: true,
+        sortName: 'userId',
+        collapsible: false,
+        method: 'get',
+        url: "/Api/Sys/SysUserApi/GetUser",
+        queryParams: {
+            userId: "",
+            userName: ""
+        },
+        columns: [[{
+            field: 'UserId',
+            title: '用户ID',
+            algin: 'center',
+            sortable: true,
+            editor: {
+                type: 'validatebox',
+                options: {
+                    required: 'true',
+                    validType: ["length[1,20]"]
+                }
+            }
+        }, {
+            field: 'UserName',
+            title: '用户名',
+            align: 'center',
+            editor: {
+                type: 'validatebox',
+                options: {
+                    required: 'true',
+                    validType: ["length[1,20]"]
+                }
+            }
+        }, {
+            field: 'UserEmail',
+            title: '邮箱',
+            align: 'center',
+            editor: {
+                type: 'validatebox',
+                options: {
+                    required: 'true',
+                    validType: ["email", "length[1,20]"]
+                }
+            }
+        }, {
+            field: 'UserMobile',
+            title: '手机',
+            align: 'center',
+            editor: {
+                type: 'numberbox',
+                options: {
+                    required: 'false'
+                }
+            }
+        }, {
+            field: 'IsEnable',
+            title: '禁用',
+            align: 'center',
+            formatter: CH.utils.setChecbox,
+            editor: {
+                type: 'checkbox',
+                options: {
+                    on: true,
+                    off: false
+                }
+            }
+        }, {
+            field: 'IsAdmin',
+            title: '超级管理员',
+            align: 'center',
+            formatter: CH.utils.setChecbox,
+            editor: {
+                type: 'checkbox',
+                options: {
+                    on: true,
+                    off: false
+                }
+            }
+        }, {
+            field: 'UserSex',
+            title: '性别',
+            align: 'center',
+            formatter: CH.utils.sextdataFormatter,
+            editor: {
+                type: 'combobox',
+                options: {
+                    panelMaxHeight: 50,
+                    data: CH.utils.sexdata,
+                    valueField: 'value',
+                    textField: 'text',
+                    editable: false
+                }
+            }
+        }, {
+            field: 'UserAddress',
+            title: '地址',
+            align: 'center',
+            editor: {
+                type: 'textbox',
+                options: {
+                    multiline: true
+                }
+            }
+        }
+
+        ]],
+        pagination: true, //表示在datagrid设置分页
+        singleSelect: true,
+        pageSize: 10,
+        pageNumber: 1,
+        pageList: [2, 5, 10, 40, 50] 
+    });
+
+    
+    $("#btn_add").click(function () {
+        AddRow();
+    });
+    $("#btn_save").click(function () {
+        Save();
+    });
+    $("#btn_edit").click(function () {
+        EditRow();
+    });
+    $("#btn_delete").click(function () {
+        RemoveRow();
+    }); 
+    $("#btn_undo").click(function () { RejectRow(); });
+    var editIndex = undefined;
+    function endEditing() {
+        if (editIndex == undefined) {
+            return true
+        }
+        if ($('#dataGrid').datagrid('validateRow', editIndex)) { 
+            $('#dataGrid').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            $('#dataGrid').datagrid('selectRow', self.editIndex);
+            return false;
+        }
+    }
+
+    function RejectRow()
+    {
+        $('#dataGrid').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+
+    function AddRow()
+    {
+        if (endEditing()) {
+            $('#dataGrid').datagrid('appendRow', {} );
+            editIndex = $('#dataGrid').datagrid('getRows').length - 1;
+            $('#dataGrid').datagrid('selectRow', editIndex)
+                    .datagrid('beginEdit', editIndex);
+        }
+    }
+
+    function EditRow() {
+
+        //if (index == undefined || typeof index === 'object') {
+        //    row = grid.datagrid('getSelected');
+        //    index = grid.datagrid('getRowIndex', row);
+        //}
+        //self.editIndex = self.ended() ? index : self.editIndex;
+        //grid.datagrid('selectRow', self.editIndex).datagrid('beginEdit', self.editIndex);
+
+        var row = $('#dataGrid').datagrid('getSelected');
+        if (row == null || row == undefined) return;
+        var index = $('#dataGrid').datagrid('getRowIndex', row);
+
+        if(endEditing())
+        {
+            $('#dataGrid').datagrid('selectRow', index).datagrid('beginEdit', index);
+            editIndex = index;
+        }
+     
+        //if (editIndex != index) {
+        //    if (endEditing()) {
+        //        $('#dataGrid').datagrid('selectRow', index)
+        //        .datagrid('beginEdit', index);
+        //        editIndex = index;
+        //    } else {
+        //        $('#dataGrid').datagrid('selectRow', editIndex);
+        //    }
+        //}
+    };
+
+    function RemoveRow() {
+        var row = $('#dataGrid').datagrid('getSelected');
+        if (row == null || row == undefined) return;
+        var index = $('#dataGrid').datagrid('getRowIndex', row);
+        $.messager.confirm('确认', '是否删除此条数据？', function (r) {
+
+            if (r) {
+                $('#dataGrid').datagrid('cancelEdit', index)
+                    .datagrid('deleteRow', index);
+                editIndex = undefined;
+            }
+        });
+
+    };
+
+    function Save() {
+
+        if (endEditing()) {
+            var rows = $('#dataGrid').datagrid('getChanges');
+            if (rows.length) {
+                var inserted = $('#dataGrid').datagrid('getChanges', 'inserted');
+                var deleted = $('#dataGrid').datagrid('getChanges', 'deleted');
+                var updated = $('#dataGrid').datagrid('getChanges', 'updated');
+                var effectRow = new Object();  
+                if (inserted.length) {
+                    effectRow["inserted"] = JSON.stringify(inserted);
+                }
+                if (deleted.length) {
+                    effectRow["deleted"] = JSON.stringify(deleted);
+                }
+                if (updated.length) {
+                    effectRow["updated"] = JSON.stringify(updated);
+                } 
+
+                $.ajax({
+                    type: 'post',
+                    url: '/api/sys/SysUserApi/EditUser',
+                    data: JSON.stringify(effectRow),
+                    contentType: 'application/json',
+                    success: function (d) {
+
+                        if (d.status == false) {
+                            $.messager.alert("错误", d.msg, 'error');
+                        }
+                        else {
+                            $('#dataGrid').datagrid('acceptChanges');
+                            //$('#gridlist').datagrid.queryParams({});
+                        }
+                    }
+                });
+
+            }
+        }
+    };
+
+    function Search() {
+
+        //设置参数
+        var queryParameter = $('#dataGrid').datagrid("options").queryParams;
+        queryParameter.userId = $("#userId").val();
+        queryParameter.userName = $("#userName").val();
+        $("#dataGrid").datagrid("reload");
+    }
+</script>

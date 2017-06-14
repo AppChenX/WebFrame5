@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section  head
+{
+    <link rel="stylesheet" type="text/css" href="~/Content/Css/base.css"> 
+    <script type="text/javascript" src="~/Content/Script/bz/knockout.binding.js"></script> 
+
+    <style type="text/css">
+        .div_edit { padding:3px;border:1px solid #8DB2E3; margin-bottom:2px; background-color:#E0ECFF;height:26px;}
+.div_edit a { float: left;}
+    </style>
+}
+<div class="div_search">
+    <fieldset title="查询条件">
+        <legend> 查询条件 </legend>
+        <table>
+            <tr>
+                <td>
+                    <label>菜单名称</label>
+                    <input type="text" class="easyui-validatebox" data-bind="value:queryParams.menuName" maxlength="10" style="height:12px;margin:0 5px 0 5px" />
+                </td> 
+                <td>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search'" data-bind="click:search">查询</a>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+
+<div class="div_edit">
+    <a id="btn_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" data-bind="click:add">增加</a>
+    <a id="btn_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" data-bind="click:edit">编辑</a>
+    <a id="btn_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" data-bind="click:del">删除</a>
+    <a id="btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" data-bind="click:save">保存</a>
+    <a id="btn_undo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" data-bind="click:undo">取消</a>
+</div>
+<!--数据展示 -->
+<table id="dataGrid"  data-bind="datagrid:grid"></table>
+
+<script type="text/javascript" src="~/Areas/Sys/ViewModel/sys_menu.js"></script>
+
+@*
+<script type="text/javascript">
+
+    var viewModel_Menu = function () {
+
+        var that = this;
+      
+        this.queryParams = {menuName:ko.observable()};
+        this.grid = {
+            url: '/api/sys/SysMenuApi/GetMenuData',
+            title: "菜单管理", 
+            idField: 'MenuId',
+            sortName: 'MenuId',
+            queryParams: ko.observable(),
+            columns: [[{
+                title: '菜单ID',
+                field: 'MenuId',
+                editor: { type: 'validatebox', options: { required: true, validType: ["length[1,20]"] } }
+            }, {
+                title: 'MenuPid',
+                field: 'MenuPid',
+                editor: { type: 'validatebox', options: { required: false, validType: ["length[1,20]"] } }
+            },  {
+                title: 'MenuUrl',
+                field: 'MenuUrl',
+                editor: { type: 'validatebox', options: { required: false, validType: ["length[1,50]"] } }
+            }, {
+                title: 'MenuName',
+                field: 'MenuName',
+                editor: { type: 'validatebox', options: { required: true, validType: ["length[1,20]"] } }
+            }, {
+                title: 'MenuIconurl',
+                field: 'MenuIconurl',
+                editor: { type: 'validatebox', options: { required: false, validType: ["length[1,50]"] } }
+            }, {
+                title: 'MenuIconclass',
+                field: 'MenuIconclass',
+                editor: { type: 'validatebox', options: { required: false, validType: ["length[1,20]"] } }
+            }, {
+                title: 'MenuSeq',
+                field: 'MenuSeq',
+                editor: { type: 'numberbox', options: { required: false,precision:0, validType: ["length[1,20]"] } }
+            }, {
+                title: 'IsEnable',
+                field: 'IsEnable',
+                editor: {
+                    type: 'checkbox',
+                    options: {
+                        on: true,
+                        off: false
+                    }
+                }
+            }
+            ]]
+
+        };
+
+       // console.log(this.grid);
+        this.gridEdit = new CH.utils.editGridViewModel(that.grid);
+        this.grid.onDblClickRow = that.gridEdit.begin;
+        this.grid.onClickRow = that.gridEdit.ended;
+
+        this.search = function () {
+
+            that.grid.queryParams(ko.toJS(that.queryParams));
+        };
+        this.undo=function()
+        {
+            this.gridEdit.reject();
+        };
+        this.add = function () {
+            this.gridEdit.addnew({ 'MenuSeq': 0, 'IsEnable': true });
+        }
+        this.save = function () {
+            this.gridEdit.save({ url: '/api/sys/SysMenuApi/EditMenu' });
+        };
+        this.edit = function () {
+
+            var row = that.grid.datagrid('getSelected');
+            if (!row) return $.messager.alert("提示", '请选择要编辑的数据', 'warning');
+            that.gridEdit.begin();
+
+        };
+        this.del = function () {
+            var row = that.grid.datagrid('getSelected');
+            if (!row) return $.messager.alert("提示", '请选择要删除的数据', 'warning');
+            that.gridEdit.deleterow();
+        };
+
+    };
+
+    ko.applyBindings(new viewModel_Menu());
+
+</script>
+
+*@

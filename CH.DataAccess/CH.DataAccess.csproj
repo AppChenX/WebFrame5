@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7CBD2975-3D0C-4BC3-BB4E-932F910778CF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LinqToDB</RootNamespace>
+    <AssemblyName>CH.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <UseMSBuildEngine>False</UseMSBuildEngine>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug.4.5\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;FW4;OVERRIDETOSTRING1</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release.4.5\</OutputPath>
+    <DefineConstants>TRACE;FW4</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Linq2db\linq2db.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMono|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\ReleaseMono\</OutputPath>
+    <DefineConstants>TRACE;FW4;MONO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMono|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\DebugMono\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;FW4;MONO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DbContext.cs" />
+    <Compile Include="Linq2DbConnectionManager.cs" />
+    <Compile Include="Linq2DbTransactionWrapper.cs" />
+    <Compile Include="Linq2db\AsyncExtensions.cs" />
+    <Compile Include="Linq2db\Common\LinqToDBConvertException.cs" />
+    <Compile Include="Linq2db\Configuration\IConnectionStringSettings.cs" />
+    <Compile Include="Linq2db\Configuration\IDataProviderSettings.cs" />
+    <Compile Include="Linq2db\Configuration\ILinqToDBSettings.cs" />
+    <Compile Include="Linq2db\Configuration\NamedValue.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\SqlServerVersion.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerConfiguration.cs" />
+    <Compile Include="Linq2db\Data\TraceInfoStep.cs" />
+    <Compile Include="Linq2db\KeepConnectionAliveScope.cs" />
+    <Compile Include="Linq2db\DataProvider\Access\AccessTools.cs" />
+    <Compile Include="Linq2db\DataProvider\Access\AccessSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\Access\AccessBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\BasicMerge.cs" />
+    <Compile Include="Linq2db\DataProvider\BasicBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2BulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2LUWSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2LUWSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2SqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2Tools.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2DataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2Factory.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2MappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2Types.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2zOSSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2SqlBuilderBase.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2IdentifierQuoteMode.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2Version.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2zOSSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\DB2\DB2Merge.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdIdentifierQuoteMode.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdConfiguration.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdTools.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdMerge.cs" />
+    <Compile Include="Linq2db\DataProvider\IDataProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Linq2db\DataProvider\Informix\InformixMerge.cs" />
+    <Compile Include="Linq2db\DataProvider\Informix\InformixSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\Informix\InformixTools.cs" />
+    <Compile Include="Linq2db\DataProvider\Informix\InformixFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\Informix\InformixDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\Informix\InformixMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\Informix\InformixSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\Informix\InformixSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\Informix\InformixBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\MultipleRowsHelper.cs" />
+    <Compile Include="Linq2db\DataProvider\MySql\MySqlBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\MySql\MySqlSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\MySql\MySqlTools.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleXmlTable.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleMerge.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleTools.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\Oracle\OracleSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\PostgreSQLBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\PostgreSQLSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\PostgreSQLTools.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\PostgreSQLSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\PostgreSQLFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\PostgreSQLDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\PostgreSQLMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\PostgreSQLSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\PostgreSQL\PostgreSQLIdentifierQuoteMode.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\CalculationViewInputParametersExpressionAttribute.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\GetHanaSchemaOptions.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaOdbcSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaOdbcSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaOdbcDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\SapHanaTools.cs" />
+    <Compile Include="Linq2db\DataProvider\SapHana\ViewWithParametersTableSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlCe\SqlCeBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlCe\SqlCeSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\SQLite\SQLiteBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\SQLite\SQLiteSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServer2005SqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServer2000SqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerMerge.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\Sybase\SybaseBulkCopy.cs" />
+    <Compile Include="Linq2db\DataProvider\Sybase\SybaseSqlOptimizer.cs" />
+    <Compile Include="Linq2db\DataProvider\DataTools.cs" />
+    <Compile Include="Linq2db\Data\BulkCopyOptions.cs" />
+    <Compile Include="Linq2db\Data\BulkCopyRowsCopied.cs" />
+    <Compile Include="Linq2db\Data\BulkCopyType.cs" />
+    <Compile Include="Linq2db\Data\CommandInfo.cs" />
+    <Compile Include="Linq2db\Data\DataConnection.Async.cs" />
+    <Compile Include="Linq2db\Data\DataConnectionTransaction.cs" />
+    <Compile Include="Linq2db\Data\DataReaderAsync.cs" />
+    <Compile Include="Linq2db\Data\TraceInfo.cs" />
+    <Compile Include="Linq2db\Expressions\GetItemExpression.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ChangeTypeExpressionBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ContextParser.cs" />
+    <Compile Include="Linq2db\Linq\Builder\DropBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\LoadWithBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\WithTableExpressionBuilder.cs" />
+    <Compile Include="Linq2db\Linq\IExpressionInfo.cs" />
+    <Compile Include="Linq2db\Mapping\Relationship.cs" />
+    <Compile Include="Linq2db\Mapping\ColumnAliasAttribute.cs" />
+    <Compile Include="Linq2db\Expressions\IGenericInfoProvider.cs" />
+    <Compile Include="Linq2db\Mapping\DataTypeAttribute.cs" />
+    <Compile Include="Linq2db\Mapping\StoredProcedure.cs" />
+    <Compile Include="Linq2db\Metadata\SystemDataSqlServerAttributeReader.cs" />
+    <Compile Include="Linq2db\SchemaProvider\ColumnInfo.cs" />
+    <Compile Include="Linq2db\SchemaProvider\DataTypeInfo.cs" />
+    <Compile Include="Linq2db\SchemaProvider\ForeingKeyInfo.cs" />
+    <Compile Include="Linq2db\SchemaProvider\PrimaryKeyInfo.cs" />
+    <Compile Include="Linq2db\SchemaProvider\ProcedureInfo.cs" />
+    <Compile Include="Linq2db\SchemaProvider\ProcedureParameterInfo.cs" />
+    <Compile Include="Linq2db\SchemaProvider\TableInfo.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlCe\SqlCeTools.cs" />
+    <Compile Include="Linq2db\DataProvider\SQLite\SQLiteTools.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerTools.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\FreeTextTableExpressionAttribute.cs" />
+    <Compile Include="Linq2db\DataProvider\Sybase\SybaseTools.cs" />
+    <Compile Include="Linq2db\DataProvider\Sybase\SybaseSchemaProvider.cs" />
+    <Compile Include="Linq2db\Linq\Builder\AsUpdatableBuilder.cs" />
+    <Compile Include="Linq2db\Linq\ExpressionQuery.cs" />
+    <Compile Include="Linq2db\ITableT.cs" />
+    <Compile Include="Linq2db\DataProvider\Access\AccessDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\Access\AccessFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\Access\AccessMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\Access\AccessSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\Access\AccessSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\AssemblyResolver.cs" />
+    <Compile Include="Linq2db\DataProvider\BulkCopyReader.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\Firebird\FirebirdSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\MySql\MySqlFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\MySql\MySqlDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\MySql\MySqlMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\MySql\MySqlSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\MySql\MySqlSchemaProvider.cs" />
+    <Compile Include="Linq2db\SchemaProvider\AssociationType.cs" />
+    <Compile Include="Linq2db\SchemaProvider\ColumnSchema.cs" />
+    <Compile Include="Linq2db\SchemaProvider\DatabaseSchema.cs" />
+    <Compile Include="Linq2db\SchemaProvider\ForeignKeySchema.cs" />
+    <Compile Include="Linq2db\SchemaProvider\GetSchemaOptions.cs" />
+    <Compile Include="Linq2db\SchemaProvider\ISchemaProvider.cs" />
+    <Compile Include="Linq2db\SchemaProvider\ParameterSchema.cs" />
+    <Compile Include="Linq2db\SchemaProvider\ProcedureSchema.cs" />
+    <Compile Include="Linq2db\SchemaProvider\SchemaProviderBase.cs" />
+    <Compile Include="Linq2db\SchemaProvider\TableSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlCe\SqlCeSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlCe\SqlCeFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlCe\SqlCeDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlCe\SqlCeMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlCe\SqlCeSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\SQLite\SQLiteDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SQLite\SQLiteFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\SQLite\SQLiteMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\SQLite\SQLiteSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\SQLite\SQLiteSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServer2000SchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServer2012SqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServer2000SqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServer2005SqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServer2008SqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerSchemaProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerSqlBuilder.cs" />
+    <Compile Include="Linq2db\DataProvider\SqlServer\SqlServerVersion.cs" />
+    <Compile Include="Linq2db\Common\Tools.cs" />
+    <Compile Include="Linq2db\DataProvider\Sybase\SybaseDataProvider.cs" />
+    <Compile Include="Linq2db\DataProvider\Sybase\SybaseFactory.cs" />
+    <Compile Include="Linq2db\DataProvider\Sybase\SybaseMappingSchema.cs" />
+    <Compile Include="Linq2db\DataProvider\Sybase\SybaseSqlBuilder.cs" />
+    <Compile Include="Linq2db\Mapping\ColumnAttribute.cs" />
+    <Compile Include="Linq2db\Common\ArrayT.cs" />
+    <Compile Include="Linq2db\Common\Configuration.cs" />
+    <Compile Include="Linq2db\Common\Converter.cs" />
+    <Compile Include="Linq2db\Common\ConvertBuilder.cs" />
+    <Compile Include="Linq2db\Common\ConvertInfo.cs" />
+    <Compile Include="Linq2db\Common\ConvertT.cs" />
+    <Compile Include="Linq2db\Common\DefaultValue.cs" />
+    <Compile Include="Linq2db\DataProvider\ReaderInfo.cs" />
+    <Compile Include="Linq2db\Mapping\EntityMappingBuilder.cs" />
+    <Compile Include="Linq2db\Mapping\FluentMappingBuilder.cs" />
+    <Compile Include="Linq2db\Mapping\NotColumnAttribute.cs" />
+    <Compile Include="Linq2db\Expressions\DefaultValueExpression.cs" />
+    <Compile Include="Linq2db\Common\Option.cs" />
+    <Compile Include="Linq2db\Configuration\LinqToDBSection.cs" />
+    <Compile Include="Linq2db\Configuration\DataProviderElement.cs" />
+    <Compile Include="Linq2db\Configuration\DataProviderElementCollection.cs" />
+    <Compile Include="Linq2db\Configuration\ElementBase.cs" />
+    <Compile Include="Linq2db\Configuration\ElementCollectionBase.cs" />
+    <Compile Include="Linq2db\DataProvider\DataProviderBase.cs" />
+    <Compile Include="Linq2db\DataProvider\IDataProviderFactory.cs" />
+    <Compile Include="Linq2db\DataType.cs" />
+    <Compile Include="Linq2db\Data\DataConnection.Linq.cs" />
+    <Compile Include="Linq2db\Data\DataConnection.cs" />
+    <Compile Include="Linq2db\Data\DataConnectionExtensions.cs" />
+    <Compile Include="Linq2db\Data\DataParameter.cs" />
+    <Compile Include="Linq2db\Data\DataReader.cs" />
+    <Compile Include="Linq2db\Expressions\Extensions.cs" />
+    <Compile Include="Linq2db\Expressions\MemberHelper.cs" />
+    <Compile Include="Linq2db\Expressions\ConvertFromDataReaderExpression.cs" />
+    <Compile Include="Linq2db\Expressions\BinaryAggregateExpression.cs" />
+    <Compile Include="Linq2db\Extensions\MappingExtensions.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ExpressionTestGenerator.cs" />
+    <Compile Include="Linq2db\Linq\QueryableAccessor.cs" />
+    <Compile Include="Linq2db\Linq\ITable.cs" />
+    <Compile Include="Linq2db\Linq\ExpressionQueryImpl.cs" />
+    <Compile Include="Linq2db\Mapping\IdentityAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Linq2db\Mapping\InheritanceMapping.cs" />
+    <Compile Include="Linq2db\Mapping\MappingSchema.cs" />
+    <Compile Include="Linq2db\Mapping\MappingSchemaInfo.cs" />
+    <Compile Include="Linq2db\Mapping\MapValueAttribute.cs" />
+    <Compile Include="Linq2db\Mapping\ColumnDescriptor.cs" />
+    <Compile Include="Linq2db\Mapping\PropertyMappingBuilder.cs" />
+    <Compile Include="Linq2db\Mapping\ScalarTypeAttribute.cs" />
+    <Compile Include="Linq2db\Mapping\EntityDescriptor.cs" />
+    <Compile Include="Linq2db\Metadata\AttributeInfo.cs" />
+    <Compile Include="Linq2db\Metadata\AttributeReader.cs" />
+    <Compile Include="Linq2db\Metadata\FluentMetadataReader.cs" />
+    <Compile Include="Linq2db\Metadata\IMetadataReader.cs" />
+    <Compile Include="Linq2db\Metadata\MetaMemberInfo.cs" />
+    <Compile Include="Linq2db\Metadata\MetadataException.cs" />
+    <Compile Include="Linq2db\Metadata\MetadataReader.cs" />
+    <Compile Include="Linq2db\Metadata\SystemDataLinqAttributeReader.cs" />
+    <Compile Include="Linq2db\Metadata\MetaTypeInfo.cs" />
+    <Compile Include="Linq2db\Metadata\XmlAttributeReader.cs" />
+    <Compile Include="Linq2db\Mapping\PrimaryKeyAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Linq2db\ServiceModel\LinqServiceInfo.cs" />
+    <Compile Include="Linq2db\SqlProvider\BasicSqlOptimizer.cs" />
+    <Compile Include="Linq2db\SqlProvider\ISqlOptimizer.cs" />
+    <Compile Include="Linq2db\SqlProvider\JoinOptimizer.cs" />
+    <Compile Include="Linq2db\SqlProvider\SqlProviderFlags.cs" />
+    <Compile Include="Linq2db\Mapping\TableAttribute.cs" />
+    <Compile Include="Linq2db\SqlProvider\ConvertType.cs" />
+    <Compile Include="Linq2db\ProviderName.cs" />
+    <Compile Include="Linq2db\Linq\Builder\AggregationBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\AllAnyBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\BuildInfo.cs" />
+    <Compile Include="Linq2db\Linq\Builder\CastBuilder.cs" />
+    <Compile Include="Linq2db\Expressions\ChangeTypeExpression.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ConcatUnionBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ContainsBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ConvertFlags.cs" />
+    <Compile Include="Linq2db\Linq\Builder\CountBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\DefaultIfEmptyBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\DeleteBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\DistinctBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ExpressionBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ExpressionBuilder.QueryBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ExpressionBuilder.SqlBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ExpressionContext.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ExpressionHoder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\FirstSingleBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\GroupByBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\IBuildContext.cs" />
+    <Compile Include="Linq2db\Linq\Builder\InsertBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\InsertOrUpdateBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\IntersectBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ISequenceBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\IsExpressionResult.cs" />
+    <Compile Include="Linq2db\Linq\Builder\JoinBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\MethodCallBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\OfTypeBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\OrderByBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\PassThroughBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\PassThroughContext.cs" />
+    <Compile Include="Linq2db\Linq\Builder\RequestFor.cs" />
+    <Compile Include="Linq2db\Linq\Builder\ScalarSelectBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\SelectBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\SelectContext.cs" />
+    <Compile Include="Linq2db\Linq\Builder\SelectManyBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\SequenceContextBase.cs" />
+    <Compile Include="Linq2db\Linq\Builder\SequenceConvertInfo.cs" />
+    <Compile Include="Linq2db\Linq\Builder\SequenceConvertPath.cs" />
+    <Compile Include="Linq2db\Linq\Builder\SqlInfo.cs" />
+    <Compile Include="Linq2db\Linq\Builder\SubQueryContext.cs" />
+    <Compile Include="Linq2db\Linq\Builder\TableAttributeBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\TableBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\TakeSkipBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\UpdateBuilder.cs" />
+    <Compile Include="Linq2db\Linq\Builder\WhereBuilder.cs" />
+    <Compile Include="Linq2db\CompiledQuery.cs" />
+    <Compile Include="Linq2db\Linq\CompiledTableT.cs" />
+    <Compile Include="Linq2db\DataContext.cs" />
+    <Compile Include="Linq2db\Linq\DataContextInfo.cs" />
+    <Compile Include="Linq2db\DataContextTransaction.cs" />
+    <Compile Include="Linq2db\Linq\IExpressionQueryT.cs" />
+    <Compile Include="Linq2db\Linq\Expressions.cs" />
+    <Compile Include="Linq2db\DataExtensions.cs" />
+    <Compile Include="Linq2db\IDataContext.cs" />
+    <Compile Include="Linq2db\Linq\IDataContextInfo.cs" />
+    <Compile Include="Linq2db\Linq\IExpressionQuery.cs" />
+    <Compile Include="Linq2db\Linq\IQueryContext.cs" />
+    <Compile Include="Linq2db\Linq\ISelectInsertable.cs" />
+    <Compile Include="Linq2db\Linq\IUpdatable.cs" />
+    <Compile Include="Linq2db\Linq\IValueInsertable.cs" />
+    <Compile Include="Linq2db\Linq\LinqException.cs" />
+    <Compile Include="Linq2db\LinqExtensions.cs" />
+    <Compile Include="Linq2db\Linq\MemberInfoComparer.cs" />
+    <Compile Include="Linq2db\ExpressionMethodAttribute.cs" />
+    <Compile Include="Linq2db\Linq\Query.cs" />
+    <Compile Include="Linq2db\Linq\QueryContext.cs" />
+    <Compile Include="Linq2db\Linq\ReflectionHelper.cs" />
+    <Compile Include="Linq2db\SqlProvider\ValueToSqlConverter.cs" />
+    <Compile Include="Linq2db\SqlQuery\DefaulNullable.cs" />
+    <Compile Include="Linq2db\SqlQuery\ObjectSqlExpression.cs" />
+    <Compile Include="Linq2db\SqlQuery\QueryHelper.cs" />
+    <Compile Include="Linq2db\SqlQuery\ReservedWords.cs" />
+    <Compile Include="Linq2db\SqlQuery\SelectQueryOptimizer.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlFlags.cs" />
+    <Compile Include="Linq2db\Sql\Sql.Analytic.cs" />
+    <Compile Include="Linq2db\Sql\Sql.cs" />
+    <Compile Include="Linq2db\Sql\Sql.EnumAttribute.cs" />
+    <Compile Include="Linq2db\Sql\Sql.ExpressionAttribute.cs" />
+    <Compile Include="Linq2db\Sql\Sql.ExtensionAttribute.cs" />
+    <Compile Include="Linq2db\Sql\Sql.FunctionAttribute.cs" />
+    <Compile Include="Linq2db\Sql\Sql.GroupBy.cs" />
+    <Compile Include="Linq2db\Sql\Sql.PropertyAttribute.cs" />
+    <Compile Include="Linq2db\Sql\Sql.TableExpressionAttribute.cs" />
+    <Compile Include="Linq2db\Sql\Sql.TableFunctionAttribute.cs" />
+    <Compile Include="Linq2db\Linq\TableT.cs" />
+    <Compile Include="Linq2db\SqlQuery\Extensions.cs" />
+    <Compile Include="Linq2db\SqlQuery\ICloneableElement.cs" />
+    <Compile Include="Linq2db\SqlQuery\IQueryElement.cs" />
+    <Compile Include="Linq2db\SqlQuery\ISqlExpression.cs" />
+    <Compile Include="Linq2db\SqlQuery\ISqlExpressionWalkable.cs" />
+    <Compile Include="Linq2db\SqlQuery\ISqlPredicate.cs" />
+    <Compile Include="Linq2db\SqlQuery\ISqlTableSource.cs" />
+    <Compile Include="Linq2db\SqlQuery\IValueContainer.cs" />
+    <Compile Include="Linq2db\SqlQuery\Precedence.cs" />
+    <Compile Include="Linq2db\SqlQuery\QueryElementType.cs" />
+    <Compile Include="Linq2db\SqlQuery\QueryType.cs" />
+    <Compile Include="Linq2db\SqlQuery\QueryVisitor.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlBinaryExpression.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlDataType.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlException.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlExpression.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlField.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlFunction.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlParameter.cs" />
+    <Compile Include="Linq2db\SqlProvider\BasicSqlBuilder.cs" />
+    <Compile Include="Linq2db\SqlProvider\ISqlBuilder.cs" />
+    <Compile Include="Linq2db\Mapping\SequenceNameAttribute.cs" />
+    <Compile Include="Linq2db\SqlQuery\SelectQuery.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlTable.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlTableT.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlTableType.cs" />
+    <Compile Include="Linq2db\SqlQuery\SqlValue.cs" />
+    <Compile Include="Linq2db\Expressions\TransformInfo.cs" />
+    <Compile Include="Linq2db\LinqToDBException.cs" />
+    <Compile Include="Linq2db\Expressions\InternalExtensions.cs" />
+    <Compile Include="Linq2db\Mapping\AssociationDescriptor.cs" />
+    <Compile Include="Linq2db\Mapping\AssociationAttribute.cs" />
+    <Compile Include="Linq2db\Mapping\InheritanceMappingAttribute.cs" />
+    <Compile Include="Linq2db\Mapping\MapValue.cs" />
+    <Compile Include="Linq2db\Mapping\NotNullAttribute.cs" />
+    <Compile Include="Linq2db\Mapping\NullableAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\LinqToDBConstants.cs" />
+    <Compile Include="Properties\JetBrains.Annotations.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Linq2db\Reflection\TypeAccessorT.cs" />
+    <Compile Include="Linq2db\Reflection\IObjectFactory.cs" />
+    <Compile Include="Linq2db\Reflection\MemberAccessor.cs" />
+    <Compile Include="Linq2db\Reflection\ObjectFactoryAttribute.cs" />
+    <Compile Include="Linq2db\Reflection\TypeAccessor.cs" />
+    <Compile Include="Linq2db\Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Linq2db\ServiceModel\DataService.cs" />
+    <Compile Include="Linq2db\ServiceModel\ILinqService.cs" />
+    <Compile Include="Linq2db\ServiceModel\ILinqSoapService.cs" />
+    <Compile Include="Linq2db\ServiceModel\LinqService.cs" />
+    <Compile Include="Linq2db\ServiceModel\LinqServiceClient.cs" />
+    <Compile Include="Linq2db\ServiceModel\LinqServiceQuery.cs" />
+    <Compile Include="Linq2db\ServiceModel\LinqServiceResult.cs" />
+    <Compile Include="Linq2db\ServiceModel\LinqServiceSerializer.cs" />
+    <Compile Include="Linq2db\ServiceModel\LinqSoapServiceClient.cs" />
+    <Compile Include="Linq2db\ServiceModel\RemoteDataContextBase.cs" />
+    <Compile Include="Linq2db\ServiceModel\ServiceModelDataContext.cs" />
+    <Compile Include="Linq2db\ServiceModel\ServiceModelDataReader.cs" />
+    <Compile Include="Linq2db\ServiceModel\SoapDataContext.cs" />
+    <Compile Include="Linq2db\DataProvider\DynamicDataProviderBase.cs" />
+    <Compile Include="Linq2db\TakeHints.cs" />
+    <Compile Include="Uow\UnitOfWork.cs" />
+    <Compile Include="Uow\UnitOfWorkManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Linq2db\SqlQuery\ReservedWords.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Linq2db\SqlQuery\ReservedWordsPostgres.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Linq2db\SqlQuery\ReservedWordsOracle.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Linq2db\Compile.bat" />
+    <None Include="Linq2db\linq2db.snk" />
+    <None Include="Linq2db\LinqToDB.project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme-connectionstr.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

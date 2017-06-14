@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "targets": {
+    ".NETFramework,Version=v4.5": {},
+    ".NETFramework,Version=v4.5/win": {},
+    ".NETFramework,Version=v4.5/win-x86": {}
+  },
+  "libraries": {},
+  "projectFileDependencyGroups": {
+    "": [],
+    ".NETFramework,Version=v4.5": []
+  },
+  "packageFolders": {
+    "C:\\Users\\Chenl\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "restore": {
+      "projectUniqueName": "D:\\PrivateCode\\WebFrame\\CH.DataAccess\\LinqToDB.csproj",
+      "projectName": "LinqToDB",
+      "projectPath": "D:\\PrivateCode\\WebFrame\\CH.DataAccess\\LinqToDB.csproj",
+      "projectJsonPath": "D:\\PrivateCode\\WebFrame\\CH.DataAccess\\LinqToDB.project.json",
+      "projectStyle": "ProjectJson"
+    },
+    "frameworks": {
+      "net45": {}
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      },
+      "win-x86": {
+        "#import": []
+      }
+    }
+  }
+}

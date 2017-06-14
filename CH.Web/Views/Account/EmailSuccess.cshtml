@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head >
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>发送邮件成功</title>
+    @*<script type="text/javascript" src="~/Content/Script/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="~/Content/Script/jsencrypt.js"></script>*@ 
+    <style type="text/css">
+        body, div {
+            font-family: "lucida grande",helvetica,verdana,arial,sans-serif;
+        }
+
+        body {
+            color: #333;
+            font-size: small;
+            margin: 0;
+            padding: 0;
+        } 
+        div
+        {
+            margin:0 auto;
+            text-align:center;
+
+        }
+    </style>
+
+</head>
+<body>
+
+    <div><h3>邮件发送成功</h3></div>
+    <div><a href="/home/index">返回首页</a></div>
+    <script type="text/javascript">
+        @*$(function () {
+
+
+            var   strToHexCharCode=function  (str) {
+                if (str === "")
+                    return "";
+                var hexCharCode = [];
+               // hexCharCode.push("0X");
+                for (var i = 0; i < str.length; i++) {
+                    hexCharCode.push((str.charCodeAt(i)).toString(16).toUpperCase());
+                }
+                return hexCharCode.join("");
+            };
+
+
+            console.log(strToHexCharCode("好"));
+        var encrypt = new JSEncrypt();
+
+        var key = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCiuAeuxhdzaAf31FkRnTN0aowU C41zv2UU8u+diAwuVYeNNYP+0Uev5lkL6TIkd2yQ31dSZM0hZ7XEx9cM0PxoEafq Gh6TVc46ge8q7kk1efFuSkG9PHPXzIbTPMgbO/W7P1gNGfMvB4SqiPBnmZWmU/cz KOeqVY8n6OhkL0bShQIDAQAB';
+        encrypt.setPublicKey(key);
+        var data = encrypt.encrypt("陈力");
+
+        var data_h = strToHexCharCode(data);
+
+        console.log(data_h);
+        console.log(data);
+
+        console.log(encodeURI(data));
+       
+         
+            $.ajax({
+                url: '@Url.Action("Test")',
+                data: "pwd=" + encodeURI(data).replace(/\+/g, '%2B'),  //+号的处理：因为数据在网络上传输时，非字母数字字符都将被替换成百分号（%）后跟两位十六进制数，而base64编码在传输到后端的时候，+会变成空格，因此先替换掉。后端再替换回来
+                type: 'post',
+                success: function (msg) {
+                    alert(msg);
+                }
+            });
+        
+
+    });*@
+
+
+    </script>
+
+</body>
+</html>

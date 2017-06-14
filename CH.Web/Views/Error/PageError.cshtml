@@ -1,0 +1,8 @@
+﻿@model System.Exception  
+@{
+    ViewBag.Title = "Error";
+}
+<h2>@this.Model.Message</h2>
+<p><b>Exception Type: </b>@this.Model.GetType()</p>
+<p><b>StackTrace: </b>@this.Model.StackTrace</p>
+

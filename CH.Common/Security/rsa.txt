@@ -1,0 +1,77 @@
+﻿
+genrsa -out rsa_private_key.pem 1024  
+rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
+
+1、PKCS1私钥生成
+
+     openssl genrsa -out private.key 1024
+
+     private.key文件内容如下：
+
+     -----BEGIN RSA PRIVATE KEY-----
+     MIICXQIBAAKBgQDREk3uy4x9i4a16OYOYEp5Ir2f16lsmUHB2HjGDlxkU0ju9YAp
+     yeZlUXb191ZkxJ2vx2+vKppN4gKLDy5r7JMTpwch1CNvceySX6DiM4lwTAnUEZiB
+     YgNBNrKINEtJmXWSZBTeR7v7HH/ExNP5vyhhk06L1lOoknhYcq99FjTGhwIDAQAB
+     AoGABOtPVh0H8zRDOSh/sTrmxa7hk085t0pr16nGPbK8zcd/4c948oLDnwKpr+Pf
+     7oMJyscAg7iW5No6gRccWoG4fCT5jBvJzcMloZnA36sE0btzlTj//714oBYiEcO4
+     aWC7JByMgVWZ2WakqLQGoiv4oKdzizgc0LmCC3XM5+F+RpECQQD4yHQJuJd6/jgX
+     IE8v83AiUJDh0N8nOt2SGqWzZpYKM1OUQIV+ss3SkRz5yWqfUBKgyU8OVkRWj78R
+     uZi2WsijAkEA1yLwo+prkBm5rgbQIGRnDJ5Bbf/0/p+fSJfm2tiQ1o94TjuhJs49
+     ehFLtJKpQT93xlOnFwI7rAJWVUdLPUs0zQJAL46iH/mZe3l9X25dtNzkYqrkB0bW
+     YblvAa72XgUOSYTmRUDQRBgKIGZ9E4LdTvcPmIzi/+qdxa5U6B6Cgtl34QJBAIqU
+     zz5HexJP//PCH7897cOLDcq13jNGz2wLrYG7j1EnCfAbKSu+HovLKGEhODX3lEgF
+     CtUfcyDSQJqeWjEZiOECQQC9vagG0+dxLmvlXg6sYEN1c+eI8KJIapKg0XBzPAqY
+     cfT2chF3dUPA3oTfrk51MbHaGjI1Ukd76Vp2Q83JClbp
+     -----END RSA PRIVATE KEY-----
+
+
+
+2、PKCS1私钥转换为PKCS8(该格式一般java调用)
+
+    openssl pkcs8 -topk8 -inform PEM -in private.key -outform pem -nocrypt -out pkcs8.pem
+
+     pkcs8.pem文件内容
+
+     -----BEGIN PRIVATE KEY-----
+    MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANESTe7LjH2LhrXo
+    5g5gSnkivZ/XqWyZQcHYeMYOXGRTSO71gCnJ5mVRdvX3VmTEna/Hb68qmk3iAosP
+    LmvskxOnByHUI29x7JJfoOIziXBMCdQRmIFiA0E2sog0S0mZdZJkFN5Hu/scf8TE
+    0/m/KGGTTovWU6iSeFhyr30WNMaHAgMBAAECgYAE609WHQfzNEM5KH+xOubFruGT
+    Tzm3SmvXqcY9srzNx3/hz3jygsOfAqmv49/ugwnKxwCDuJbk2jqBFxxagbh8JPmM
+    G8nNwyWhmcDfqwTRu3OVOP//vXigFiIRw7hpYLskHIyBVZnZZqSotAaiK/igp3OL
+    OBzQuYILdczn4X5GkQJBAPjIdAm4l3r+OBcgTy/zcCJQkOHQ3yc63ZIapbNmlgoz
+    U5RAhX6yzdKRHPnJap9QEqDJTw5WRFaPvxG5mLZayKMCQQDXIvCj6muQGbmuBtAg
+    ZGcMnkFt//T+n59Il+ba2JDWj3hOO6Emzj16EUu0kqlBP3fGU6cXAjusAlZVR0s9
+    SzTNAkAvjqIf+Zl7eX1fbl203ORiquQHRtZhuW8BrvZeBQ5JhOZFQNBEGAogZn0T
+    gt1O9w+YjOL/6p3FrlToHoKC2XfhAkEAipTPPkd7Ek//88Ifvz3tw4sNyrXeM0bP
+    bAutgbuPUScJ8BspK74ei8soYSE4NfeUSAUK1R9zINJAmp5aMRmI4QJBAL29qAbT
+    53Eua+VeDqxgQ3Vz54jwokhqkqDRcHM8Cphx9PZyEXd1Q8DehN+uTnUxsdoaMjVS
+    R3vpWnZDzckKVuk=
+    -----END PRIVATE KEY-----
+
+3、PKCS8格式私钥转换为PKCS1（传统私钥格式）
+
+     openssl pkcs8 -in pkcs8.pem -nocrypt -out pri_key.pem
+
+     pri_key.pem文件内容如下：
+
+     -----BEGIN RSA PRIVATE KEY-----
+     MIICXQIBAAKBgQDREk3uy4x9i4a16OYOYEp5Ir2f16lsmUHB2HjGDlxkU0ju9YAp
+     yeZlUXb191ZkxJ2vx2+vKppN4gKLDy5r7JMTpwch1CNvceySX6DiM4lwTAnUEZiB
+     YgNBNrKINEtJmXWSZBTeR7v7HH/ExNP5vyhhk06L1lOoknhYcq99FjTGhwIDAQAB
+     AoGABOtPVh0H8zRDOSh/sTrmxa7hk085t0pr16nGPbK8zcd/4c948oLDnwKpr+Pf
+     7oMJyscAg7iW5No6gRccWoG4fCT5jBvJzcMloZnA36sE0btzlTj//714oBYiEcO4
+     aWC7JByMgVWZ2WakqLQGoiv4oKdzizgc0LmCC3XM5+F+RpECQQD4yHQJuJd6/jgX
+     IE8v83AiUJDh0N8nOt2SGqWzZpYKM1OUQIV+ss3SkRz5yWqfUBKgyU8OVkRWj78R
+     uZi2WsijAkEA1yLwo+prkBm5rgbQIGRnDJ5Bbf/0/p+fSJfm2tiQ1o94TjuhJs49
+     ehFLtJKpQT93xlOnFwI7rAJWVUdLPUs0zQJAL46iH/mZe3l9X25dtNzkYqrkB0bW
+     YblvAa72XgUOSYTmRUDQRBgKIGZ9E4LdTvcPmIzi/+qdxa5U6B6Cgtl34QJBAIqU
+     zz5HexJP//PCH7897cOLDcq13jNGz2wLrYG7j1EnCfAbKSu+HovLKGEhODX3lEgF
+     CtUfcyDSQJqeWjEZiOECQQC9vagG0+dxLmvlXg6sYEN1c+eI8KJIapKg0XBzPAqY
+     cfT2chF3dUPA3oTfrk51MbHaGjI1Ukd76Vp2Q83JClbp
+     -----END RSA PRIVATE KEY-----
+
+
+	 http://download.csdn.net/detail/luomiwhy/8918207#comment  下载
+
+	 http://www.cnblogs.com/zhaoyihao/p/5345784.html  方法

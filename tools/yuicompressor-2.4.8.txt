@@ -1,0 +1,2 @@
+C:\Users\Chenl>java -jar C:\yuicompressor\yuicompressor-2.4.8.jar C:\yuicompress
+or\jquery.cookie.js >C:\yuicompressor\jquery.cookie.min.js

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ @model dynamic  
+ <h4>You have requested for a(an):@Model.Name</h4>
+<div  style="line-height:40px; word-wrap:break-word; width:100px">文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
+<input id="txtUser" type="text" style=" width:50px; height:14px" />
+<input id="btnSubmit" type="button" value="Click" />
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#btnSubmit").click(function () {
+           
+            //url 	必需。规定把请求发送到哪个 URL。
+            //data 	可选。映射或字符串值。规定连同请求发送到服务器的数据。
+            //success(data, textStatus, jqXHR) 	可选。请求成功时执行的回调函数。
+            //dataType
+           
+            $.ajax({
+                type: 'post',
+                url: '/api/sys/SysMenuApi/EditUser',
+                //data:  { "name": "Jack", "age": "12" } ,
+
+                dataType: 'json',
+                data: JSON.stringify({ "name": "Jack", "age": "12" }),
+                
+                contentType:'application/json',
+                success: function (d) {
+                }
+            });
+        })
+    })
+
+</script>

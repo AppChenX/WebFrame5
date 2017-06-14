@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section  head
+{
+    <link rel="stylesheet" type="text/css" href="~/Content/base.css">  
+<link rel="stylesheet" type="text/css" href="~/Scripts/ztree/css/zTreeStyle/zTreeStyle.css">
+<script type="text/javascript" src="~/Scripts/ztree/js/jquery.ztree.all.js"></script>
+    <script type="text/javascript" src="~/Scripts/core/knockout.binding.js"></script> 
+}
+<div class="div_search">
+    <fieldset title="查询条件">
+        <legend> 查询条件 </legend>
+        <table>
+            <tr>
+                <td>
+                    <label>用户ID</label>
+                    <input type="text" id="userId" data-bind="value:queryParams.userId" class="easyui-validatebox" maxlength="10" style="height:12px;margin:0 5px 0 5px" />
+                </td>
+                <td>
+                    <label>用户名</label>
+                    <input type="text" id="userName" data-bind="value:queryParams.userName" class="easyui-validatebox" maxlength="10" style="height:12px;margin:0 5px 0 5px" />
+                </td>
+                <td>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search'" data-bind="click:search">查询</a>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+
+<div class="div_edit">
+    <a id="btn_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" data-bind="click:add">增加</a>
+    <a id="btn_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" data-bind="click:edit">编辑</a>
+    <a id="btn_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" data-bind="click:del">删除</a>
+    <a id="btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" data-bind="click:save">保存</a>
+    <a id="btn_undo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" data-bind="click:undo">取消</a>
+</div>
+<!--数据展示 -->
+<table id="dataGrid" style="width:100% " data-bind="datagrid:grid"></table>
+
+
+<!--用户部门-->
+<script type="text/html" id="userdepartmentedit-template">
+
+    <ul id="tree1" class="ztree" data-bind="ztree:tree"></ul>
+
+</script>
+
+<!---用户角色-->
+<script type="text/html" id="userroleedit-template">  
+    
+    <div style="border-bottom:1px solid #CCC; margin-bottom:5px;">
+        <span id="user_name" class="icon32 icon-group32" style="font-weight:bold; font-size:14px;color:#666;" data-bind="text:userId"></span><span data-bind="text:userName"></span>
+    </div>
+    <select multiple="multiple" style=" width:100%; height:150px " data-bind="options:roles,optionsText:'RoleName',optionsValue:'RoleId' "></select>
+
+</script>
+ 
+
+<!--选择角色-->
+<script type="text/html" id="roleselect-template">
+    <table id="grid_role" style="width:100% " data-bind="datagrid:grid"></table>
+</script>
+
+<script type="text/javascript" src="/Areas/Sys/ViewModel/sys_user.js"></script>
+<script type="text/javascript" src="/Areas/Sys/ViewModel/sys_userdepartment.js"></script>
+<script type="text/javascript">
+
+    var m_sys_user = new viewModle_bz.sys_user('@Html.Raw(User.Identity.Name)');
+    ko.applyBindings(m_sys_user);
+</script>
+ 

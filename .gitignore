@@ -1,0 +1,15 @@
+/CH.BLL/bin
+/CH.BLL/obj
+/CH.Common/obj
+/CH.Common/bin
+/CH.DataAccess/obj
+/CH.DataAccess/bin
+/CH.Model/bak
+/CH.Model/bin
+/CH.Model/obj
+/.vs/WebFrame
+/ConsoleApp1
+/packages
+/.vs
+/CH.Web/bin/*.pdb
+/CH.Web/bin/roslyn

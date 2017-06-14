@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@section  head
+{
+    <link rel="stylesheet" type="text/css" href="~/Scripts/ztree/css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/index.css">
+    <script type="text/javascript" src="~/Scripts/ztree/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.easyui.tabsextend.js"></script>
+
+<style type="text/css">
+    .div_row {
+        float: left;
+        width:100%;
+    }
+
+        .div_row div { 
+            
+            float: left; 
+            width:80px;
+            text-align:right;
+            
+            margin:2px 5px;
+        }
+</style>  
+
+}
+<body onselectstart="return false;" class="easyui-layout" style="overflow-y: hidden; " fit="true" scroll="no">
+
+    <div id="notity"></div>
+    <div region="north" class="head-north" split="true" border="false">
+        <div class="head head-right">
+            <a href="javascript:void(0)" class="easyui-menubutton" data-options="menu:'#mm_user',iconCls:'icon-user'">当前用户:@(User.Identity.Name)[@(ViewBag.Role == null ? "超级管理员" : ViewBag.Role)<text>]</text></a> 
+            <div id="mm_user" style="width:150px;">
+                <div data-options="iconCls:'icon-set1'" class="myconfig">个人设置</div>
+                <div data-options="iconCls:'icon-edit'" class="changepwd">修改密码</div>
+                <div class="menu-sep"></div>
+                <div data-options="iconCls:'icon-user_go'" class="loginOut">安全退出</div>
+            </div>
+        </div>
+        <span class="head-left">
+            测试系统
+        </span>
+
+    </div>
+    <div region="west" class="west" split="true" title="导航菜单" style="width:180px;" id="west">
+        <div id="tree_loading"></div>
+        <div id="tree" class="ztree"></div>
+    </div>
+
+    <div region="south" split="true" class="head-south">
+        <div class="footer">Copyright &copy; 2017 Chenl, All Rights Reserved</div>
+    </div>
+
+    <div region="center" id="mainPanle" style="background: #eee; overflow-y:hidden">
+        <div id="tabs" class="easyui-tabs" fit="true" border="false">
+            <div title="欢迎使用" style="overflow:hidden;" id="M0"></div>
+        </div>
+    </div>
+
+    <div id="closeMenu" class="easyui-menu" style="width:150px; display:none;">
+        <div id="refresh" iconcls="icon-arrow_refresh">刷新</div>
+        <div class="menu-sep"></div>
+        <div id="close">关闭</div>
+        <div id="closeall">全部关闭</div>
+        <div id="closeother">除此之外全部关闭</div>
+        <div class="menu-sep"></div>
+        <div id="closeright">关闭右侧标签</div>
+        <div id="closeleft">关闭左侧标签</div>
+        <div class="menu-sep"></div>
+        <div id="exit">退出</div>
+    </div>
+
+    <script type="text/html" id="password-template"> 
+           
+            <form id="password_form">
+                <div class="div_row">
+                    <div>登录名</div>
+                    <div>
+                        <input class="easyui-validatebox" value=@User.Identity.Name id="userid" data-options="readonly:true" />
+                    </div>
+                </div>
+
+                <div class="div_row">
+                    <div>原始密码</div>
+                    <div>
+                        <input class="easyui-validatebox" data-bind="value:password" type="password" name="name" id="userpwd" data-options="required:true,validType:'length[1,20]'" />
+                    </div>
+                </div>
+
+                <div class="div_row">
+                    <div>新密码</div>
+                    <div>
+                        <input class="easyui-validatebox" data-bind="value:userpwd1" id="userpwd1" type="password" required="required" validtype="length[1,20]" />
+                    </div>
+                </div>
+
+                <div class="div_row">
+                    <div>确认密码</div>
+                    <div>
+                        <input class="easyui-validatebox" data-bind="value:userpwd2" id="userpwd2" type="password" data-options="required:true" validtype="matchs['#userpwd1']" />  
+                    </div>
+                </div> 
+            </form>  
+    </script>
+    <script type="text/javascript" src="~/Scripts/bz/layout.js"></script>
+    <script type="text/javascript">  
+        /*
+         *初始化首页，加载菜单权限
+        */
+        CH.Layout.init('@Html.Raw(User.Identity.Name)');
+    </script>
+</body>

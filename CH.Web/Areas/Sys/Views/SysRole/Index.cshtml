@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section  head
+{
+    <link rel="stylesheet" type="text/css" href="~/Content/base.css">
+<link rel="stylesheet" type="text/css" href="~/Scripts/ztree/css/zTreeStyle/zTreeStyle.css"> 
+<script type="text/javascript" src="~/Scripts/ztree/js/jquery.ztree.all.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/linq.js_ver2.2.0.2/linq.js"></script>
+  <script type="text/javascript" src="~/Scripts/core/knockout.binding.js"></script>
+
+
+
+}
+
+<div class="div_edit">
+    <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" data-bind="click:search">刷新</a>
+    <a id="btn_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" data-bind="click:add">增加</a>
+    <a id="btn_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" data-bind="click:edit">编辑</a>
+    <a id="btn_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" data-bind="click:del">删除</a>
+    <a id="btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" data-bind="click:save">保存</a>
+    <a id="btn_undo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" data-bind="click:undo">取消</a>
+</div>
+<!--数据展示 -->
+<table id="dataGrid" style="width:100% " data-bind="datagrid:grid"></table>
+
+<!--编辑角色下的用户-->
+<script type="text/html" id="userroleedit-template">
+
+    <!--显示角色下的用户能 增加、编辑、删除用户-->
+
+    <div style="border-bottom:1px solid #CCC; margin-bottom:5px;">
+        <span id="role_name" class="icon32 icon-group32" style="padding-left:48px;font-weight:bold; font-size:14px;color:#666;" data-bind="text:roleName"></span><span data-bind="text:roleDesc"></span>
+    </div>
+    <div style="margin-bottom:10px;height:220px; overflow:auto">
+
+        <ul style="margin:0;padding:0;clear:both" data-bind="foreach:users">
+            <li style="float:left;list-style:none;margin:3px;"><div style="border:solid 1px #CCC;color:#006699;background-color: #e8f4ff;"><span data-bind="text:$data.UserName"></span>[<span data-bind="text:$data.UserId"></span>]<a href="#" class="easyui-linkbutton" id="group_delete" plain="true" iconcls="icon-group-delete" data-bind="click:$parent.remove">删除</a></div></li>
+        </ul>
+    </div>
+
+</script>
+<!--选择用户-->
+<script type="text/html" id="menuroleedit-selectuser-template">
+    <table id="dataGrid" style="width:100% " data-bind="datagrid:grid"></table>
+</script>
+<!--//菜单权限-->
+<script type="text/html" id="menuroleedit-template"> 
+     
+         <ul id="tree1" class="ztree" data-bind="ztree:tree"></ul> 
+    
+</script>
+
+<!--//菜单按钮权限-->
+<script type="text/html" id="actionroleedit-template"> 
+        <ul id="tree2" class="ztree" data-bind="ztree:tree2"></ul>  
+</script>
+
+<!--//角色所属角色-->
+<script type="text/html" id="roleedit-roleowner-template">
+    <div style="border-bottom:1px solid #CCC; margin-bottom:5px;">
+        <span id="role_name" class="icon32 icon-group32" style="font-weight:bold; font-size:14px;color:#666;" data-bind="text:roleName"></span><span data-bind="text:roleDesc"></span>
+    </div>
+    <select multiple="multiple" style=" width:100%; height:150px " data-bind="options:roles,optionsText:'RoleName',optionsValue:'RolePid' "></select>
+
+</script>
+
+<!--//选择角色-->
+<script type="text/html" id="roleedit-selectrole-template">
+    <table id="grid_role" style="width:100% " data-bind="datagrid:grid"></table>
+</script>
+
+
+
+<script type="text/javascript" src="/Areas/Sys/ViewModel/sys_role.js"></script>
+<script type="text/javascript" src="/Areas/Sys/ViewModel/sys_roleuser.js"></script>
+<script type="text/javascript" src="/Areas/Sys/ViewModel/sys_rolemenu.js"></script>
+<script type="text/javascript" src="/Areas/Sys/ViewModel/sys_roleaction.js"></script>
+<script type="text/javascript" src="/Areas/Sys/ViewModel/sys_role_member.js"></script>
+<script type="text/javascript">
+
+    var m_sys_role = new viewModle_bz.sys_role('@Html.Raw(User.Identity.Name)');
+    ko.applyBindings(m_sys_role);
+</script>
+
+
+
+
