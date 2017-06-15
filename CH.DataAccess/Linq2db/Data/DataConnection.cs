@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading;
 
 using JetBrains.Annotations;
+using log4net;
+using System.Reflection;
 
 namespace LinqToDB.Data
 {
@@ -21,9 +23,11 @@ namespace LinqToDB.Data
 
 	public partial class DataConnection : ICloneable
 	{
-		#region .ctor
 
-		public DataConnection() : this((string)null)
+        private ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        #region .ctor
+
+        public DataConnection() : this((string)null)
 		{
 		}
 
@@ -812,6 +816,8 @@ namespace LinqToDB.Data
 					Command        = Command,
 				});
 			}
+
+            log.Info(Command.CommandText);
 
 			var now = DateTime.Now;
 

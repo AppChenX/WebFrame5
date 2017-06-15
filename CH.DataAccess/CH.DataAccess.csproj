@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug.4.5\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;FW4;OVERRIDETOSTRING1</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,7 +33,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Linq2db\linq2db.snk</AssemblyOriginatorKeyFile>
@@ -506,6 +506,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme-connectionstr.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CH.Common\CH.Common.csproj">
+      <Project>{e60a400c-1c84-4249-8b3d-5d2e3614f33c}</Project>
+      <Name>CH.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
