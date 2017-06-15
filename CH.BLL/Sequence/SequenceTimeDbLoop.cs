@@ -89,8 +89,8 @@ namespace CH.BLL.Sequence
             try
             {
 
-
-                int i=  db.Query<SysSequence>().Where(m => m.CTimestamp == Seq.CTimestamp&&m.SeqId==Seq.SeqId).Update(m=>new SysSequence() { CTimestamp=Sql.ToSql(Sql.CurrentTimestamp), CCurdate=Seq.CCurdate, CCurval=Seq.CCurval, CVal=Seq.CVal });
+                int i = db.Query<SysSequence>().Where(m => m.CVersion == Seq.CVersion && m.SeqId == Seq.SeqId).Update(m => new SysSequence() { CVersion = m.CVersion + 1, CCurdate = Seq.CCurdate, CCurval = Seq.CCurval, CVal = Seq.CVal });
+                //int i=  db.Query<SysSequence>().Where(m => m.CTimestamp == Seq.CTimestamp&&m.SeqId==Seq.SeqId).Update(m=>new SysSequence() { CTimestamp=Sql.ToSql(Sql.CurrentTimestamp), CCurdate=Seq.CCurdate, CCurval=Seq.CCurval, CVal=Seq.CVal });
                 if (i > 0)
                 {
                     trans.Commit();
@@ -128,7 +128,7 @@ namespace CH.BLL.Sequence
                     CVal = m.CVal,
                     NStep = m.NStep, 
                     SysDate = Sql.AsSql(Sql.CurrentTimestamp),
-                    CTimestamp=m.CTimestamp
+                    CVersion = m.CVersion
 
                 }).ToList();
 

@@ -13,3 +13,8 @@
 /.vs
 /CH.Web/bin/*.pdb
 /CH.Web/bin/roslyn
+/CH.Web/obj
+/CH.Web/bin/CH.BLL.dll
+/CH.Web/bin/CH.Common.dll
+/CH.Web/bin/CH.DataAccess.dll
+/CH.Web/bin/CH.Model.dll

@@ -147,10 +147,9 @@ namespace CH.Model
         /// <summary>
         /// 
         /// </summary>
-        [Description("")]
-
-        [Column(Name = "C_TIMESTAMP")]
-        public DateTime CTimestamp
+        [Description("")] 
+        [Column(Name = "C_VERSION")]
+        public double CVersion
         {
             get;
             set;
