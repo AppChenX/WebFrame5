@@ -8,6 +8,8 @@ using LinqToDB;
 using LinqToDB.Data;
 using Newtonsoft.Json;
 using CH.Common;
+using log4net;
+using System.Reflection;
 namespace CH.BLL
 {
     public class SysUserServices
@@ -33,9 +35,15 @@ namespace CH.BLL
         /// <returns></returns>
         public SysUser GetUser_ById(string uid)
         {
+            ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             using (var db = Linq2DbConnectionManager.Get())
             {
-                return db.Query<SysUser>().Where(m => m.UserId == uid).FirstOrDefault();
+                var rs = db.Query<SysUser>().Where(m => m.UserId == uid);
+
+                log.Info((rs as LinqToDB.Linq.IExpressionQuery<SysUser>).SqlText);
+                //log.Info(rs.GetType().ToString());
+                return rs.FirstOrDefault();
+               
             }
         }
         public StatusMessage ForgetPwd(string userName, string userEmail, string verifyCode, string codeServer, Action EmailSendHandler)
@@ -85,6 +93,7 @@ namespace CH.BLL
             {
                 rs.status = "N";
                 rs.msg = ex.Message;
+                 
                 return rs;
             }
         }
@@ -231,6 +240,8 @@ namespace CH.BLL
         /// <returns></returns>
         public string[] AuthorizedUserLogin(string username, string userpwd, string code, string codeServer, string localip, string netip, string addres, Action<string, string, string, string, string> logHandler)
         {
+
+            ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             string status = "N";
             string msg = string.Empty;
             string _code = string.Empty;
@@ -275,6 +286,7 @@ namespace CH.BLL
                     }
                 }
             }
+            log.Info(msg);
             return new string[]
             {
                             status,msg

@@ -1822,6 +1822,7 @@
     <Content Include="LinqToDB.Templates\README.md" />
     <Content Include="LinqToDB.Templates\T4Model.ttinclude" />
     <Content Include="LinqToDB.Templates\Validation.ttinclude" />
+    <Content Include="log4net.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\easyui\jquery-cookie\.gitignore" />

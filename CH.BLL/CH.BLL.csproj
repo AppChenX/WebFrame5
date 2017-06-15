@@ -47,7 +47,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sequence\DbGenertor.cs" />
     <Compile Include="Sequence\Generator.cs" />
+    <Compile Include="Sequence\GuidGenerator.cs" />
     <Compile Include="Sequence\ISequence.cs" />
+    <Compile Include="Sequence\SequenceGuid.cs" />
     <Compile Include="Sequence\SequenceTimeDbLoop.cs" />
     <Compile Include="StatusMessage.cs" />
     <Compile Include="SysActionServices.cs" />

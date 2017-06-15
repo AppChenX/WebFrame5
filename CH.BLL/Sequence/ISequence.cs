@@ -9,6 +9,6 @@ namespace CH.BLL.Sequence
     public interface ISequence
     {
 
-        object Next(string m="");
+        object Next(string m="N");
     }
 }
