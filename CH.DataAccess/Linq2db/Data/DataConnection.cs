@@ -7,8 +7,9 @@ using System.Linq;
 using System.Threading;
 
 using JetBrains.Annotations;
-using log4net;
+ 
 using System.Reflection;
+using Common.Logging;
 
 namespace LinqToDB.Data
 {
@@ -20,11 +21,13 @@ namespace LinqToDB.Data
 	using Expressions;
 
 	using Mapping;
+   
 
 	public partial class DataConnection : ICloneable
 	{
 
-        private ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private ILog log= LogManager.GetLogger("Linq2db");
+         
         #region .ctor
 
         public DataConnection() : this((string)null)
@@ -595,6 +598,7 @@ namespace LinqToDB.Data
 				if (_connection.State == ConnectionState.Closed)
 				{
 					_connection.Open();
+                    log.Info($"Open Connection ConnectionString:{ConnectionString}");
 					_closeConnection = true;
 				}
 
@@ -626,7 +630,9 @@ namespace LinqToDB.Data
 
 			if (OnClosed != null)
 				OnClosed(this, EventArgs.Empty);
-		}
+
+            log.Info($"Close Connection ConnectionString:{ConnectionString}");
+        }
 
 		#endregion
 
@@ -691,23 +697,36 @@ namespace LinqToDB.Data
 			if (OnTraceConnection == null)
 				return Command.ExecuteNonQuery();
 
-			if (TraceSwitch.TraceInfo)
-			{
-				OnTraceConnection(new TraceInfo(TraceInfoStep.BeforeExecute)
-				{
-					TraceLevel     = TraceLevel.Info,
-					DataConnection = this,
-					Command        = Command,
-				});
-			}
+            var info = new TraceInfo(TraceInfoStep.BeforeExecute)
+            {
+                TraceLevel = TraceLevel.Info,
+                DataConnection = this,
+                Command = Command,
+            };
 
-			var now = DateTime.Now;
+            log.Info($"{info.SqlText.Replace("\r\n","")}");
+            if (TraceSwitch.TraceInfo)
+            {
+
+                //var info = new TraceInfo(TraceInfoStep.BeforeExecute)
+                //{
+                //    TraceLevel = TraceLevel.Info,
+                //    DataConnection = this,
+                //    Command = Command,
+                //};
+
+                OnTraceConnection(info);
+            }
+
+            var now = DateTime.Now;
 
 			try
 			{
-				var ret = Command.ExecuteNonQuery();
-
-				if (TraceSwitch.TraceInfo)
+                //执行Sql
+                //log.Info(Command.CommandText.Replace("\r\n", ""));
+                var ret = Command.ExecuteNonQuery();
+              
+                if (TraceSwitch.TraceInfo)
 				{
 					OnTraceConnection(new TraceInfo(TraceInfoStep.AfterExecute)
 					{
@@ -723,7 +742,8 @@ namespace LinqToDB.Data
 			}
 			catch (Exception ex)
 			{
-				if (TraceSwitch.TraceError)
+                log.Error(ex.Message);
+                if (TraceSwitch.TraceError)
 				{
 					OnTraceConnection(new TraceInfo(TraceInfoStep.Error)
 					{
@@ -747,7 +767,15 @@ namespace LinqToDB.Data
 			if (OnTraceConnection == null)
 				return Command.ExecuteScalar();
 
-			if (TraceSwitch.TraceInfo)
+            var info = new TraceInfo(TraceInfoStep.BeforeExecute)
+            {
+                TraceLevel = TraceLevel.Info,
+                DataConnection = this,
+                Command = Command,
+            };
+            log.Info($"{info.SqlText.Replace("\r\n", "")}");
+
+            if (TraceSwitch.TraceInfo)
 			{
 				OnTraceConnection(new TraceInfo(TraceInfoStep.BeforeExecute)
 				{
@@ -760,10 +788,11 @@ namespace LinqToDB.Data
 			var now = DateTime.Now;
 
 			try
-			{
-				var ret = Command.ExecuteScalar();
-
-				if (TraceSwitch.TraceInfo)
+            {  
+               
+                var ret = Command.ExecuteScalar();
+              
+                if (TraceSwitch.TraceInfo)
 				{
 					OnTraceConnection(new TraceInfo(TraceInfoStep.AfterExecute)
 					{
@@ -778,7 +807,8 @@ namespace LinqToDB.Data
 			}
 			catch (Exception ex)
 			{
-				if (TraceSwitch.TraceError)
+                log.Error(ex.Message);
+                if (TraceSwitch.TraceError)
 				{
 					OnTraceConnection(new TraceInfo(TraceInfoStep.Error)
 					{
@@ -807,25 +837,30 @@ namespace LinqToDB.Data
 			if (OnTraceConnection == null)
 				return Command.ExecuteReader(commandBehavior);
 
-			if (TraceSwitch.TraceInfo)
-			{
-				OnTraceConnection(new TraceInfo(TraceInfoStep.BeforeExecute)
-				{
-					TraceLevel     = TraceLevel.Info,
-					DataConnection = this,
-					Command        = Command,
-				});
-			}
+            var info = new TraceInfo(TraceInfoStep.BeforeExecute)
+            {
+                TraceLevel = TraceLevel.Info,
+                DataConnection = this,
+                Command = Command,
+            };
 
-            log.Info(Command.CommandText);
+            log.Info($"{info.SqlText.Replace("\r\n", "")}");
+
+            if (TraceSwitch.TraceInfo)
+			{
+				OnTraceConnection(info);
+			}
+            
+         
 
 			var now = DateTime.Now;
 
 			try
-			{
-				var ret = Command.ExecuteReader(commandBehavior);
-
-				if (TraceSwitch.TraceInfo)
+            {
+               
+                var ret = Command.ExecuteReader(commandBehavior);
+              
+                if (TraceSwitch.TraceInfo)
 				{
 					OnTraceConnection(new TraceInfo(TraceInfoStep.AfterExecute)
 					{
@@ -840,6 +875,8 @@ namespace LinqToDB.Data
 			}
 			catch (Exception ex)
 			{
+
+                log.Error(ex.Message);
 				if (TraceSwitch.TraceError)
 				{
 					OnTraceConnection(new TraceInfo(TraceInfoStep.Error)

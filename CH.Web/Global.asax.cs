@@ -7,17 +7,20 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using CH.Web.Controllers;
-using log4net;
+using Common.Logging;
 using System.Reflection;
 namespace CH.Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
 
-       
+        ILog log = LogManager.GetLogger("Sys");
         protected void Application_Start()
         {
-            log4net.Config.XmlConfigurator.Configure();
+           
+          
+           
+           
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -50,7 +53,8 @@ namespace CH.Web
 
             var controller = new ErrorController();
             controller.ViewData.Model = exp;
-            ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+           
+           
             log.Error(exp.Message);
             ((IController)controller).Execute(new RequestContext(new HttpContextWrapper(Context), routeData));
         }
