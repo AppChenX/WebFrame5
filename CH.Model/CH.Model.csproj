@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CH.Model</RootNamespace>
     <AssemblyName>CH.Model</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CH.DataAccess, Version=1.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CH.DataAccess\bin\Debug.4.0\CH.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,10 +68,6 @@
     <ProjectReference Include="..\CH.Common\CH.Common.csproj">
       <Project>{e60a400c-1c84-4249-8b3d-5d2e3614f33c}</Project>
       <Name>CH.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CH.DataAccess\CH.DataAccess.csproj">
-      <Project>{7cbd2975-3d0c-4bc3-bb4e-932f910778cf}</Project>
-      <Name>CH.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

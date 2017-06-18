@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,8 +30,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CH.DataAccess, Version=1.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CH.DataAccess\bin\Debug.4.0\CH.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -65,10 +71,6 @@
     <ProjectReference Include="..\CH.Common\CH.Common.csproj">
       <Project>{e60a400c-1c84-4249-8b3d-5d2e3614f33c}</Project>
       <Name>CH.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CH.DataAccess\CH.DataAccess.csproj">
-      <Project>{7cbd2975-3d0c-4bc3-bb4e-932f910778cf}</Project>
-      <Name>CH.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\CH.Model\CH.Model.csproj">
       <Project>{298379b4-741d-452d-9e81-571ccfc9e253}</Project>

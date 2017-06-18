@@ -75,7 +75,11 @@ namespace DataAccess.Domain.Uow
         {
             try
             {
-                Completed?.Invoke(this, null);
+                //Completed?.Invoke(this, null);
+                if(Completed!=null)
+                {
+                    Completed.Invoke(this, null);
+                }
                 return string.Empty;
             }
             catch (Exception ex)

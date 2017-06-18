@@ -16,7 +16,15 @@ namespace LinqToDB
         {
             if (UnitOfWork.Current != null)
             {
+#if !NOASYNC
                 var key = $"{nameof(Linq2DbConnectionManager)}.{connectionStringName}";
+
+
+
+#else
+                  var key = string.Format("{0}.{1}", "Linq2DbConnectionManager", connectionStringName); 
+#endif
+                //var key = $"{nameof(Linq2DbConnectionManager)}.{connectionStringName}";
                 if (!UnitOfWork.Current.TransactionableList.ContainsKey(key))
                 {
                     var wrapper = new Linq2DbTransactionWrapper(CreateInternal(connectionStringName));

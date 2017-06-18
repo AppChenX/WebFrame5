@@ -500,12 +500,12 @@
     <EmbeddedResource Include="Linq2db\SqlQuery\ReservedWordsOracle.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Linq2db\Compile.bat" />
     <None Include="Linq2db\linq2db.snk" />
     <None Include="Linq2db\LinqToDB.project.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme-connectionstr.txt" />
+    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CH.Common\CH.Common.csproj">

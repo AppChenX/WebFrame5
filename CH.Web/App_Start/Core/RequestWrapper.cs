@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.Specialized;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using CH.Common;
 namespace CH.Web
 {
     public class RequestWrapper 

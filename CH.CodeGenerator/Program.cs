@@ -2,37 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-
+using RazorEngine.Templating;
+using RazorEngine.Configuration;
+using System.IO;
+using System.Text;
 namespace CH.CodeGenerator
 {
     static class Program
     {
+
+
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
-        [STAThread]
-        static void Main()
+        /*   [STAThread]
+          static void Main()
+          {
+              Application.EnableVisualStyles();
+              Application.SetCompatibleTextRenderingDefault(false);
+              Application.Run(new frmMain());
+          } */
+
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-    /*
-     
-     static void Main(string[] args)
-        {
-           var db = new LinqToDB.Data.DataConnection("SqlServer");
+            var db = new LinqToDB.Data.DataConnection("default");
 
             var sp = db.DataProvider.GetSchemaProvider();
             var schema = sp.GetSchema(db);
@@ -48,13 +41,13 @@ namespace CH.CodeGenerator
                     table = item;
                     foreach (var col in item.Columns)
                     {
-                       
+
                         //Console.WriteLine(string.Format(" col.ColumnName:{0},col.ColumnType:{1},col.DataType :{2},col.Length:{3} ,col.MemberType:{4}", col.ColumnName, col.ColumnType, col.DataType, col.Length, col.MemberType));
                     }
                 }
             }
 
- 
+
             string index = System.IO.File.ReadAllText("testdb2linq.cshtml", System.Text.Encoding.UTF8);
             var config = new TemplateServiceConfiguration();
             config.BaseTemplateType = typeof(CustomTemplateBase<>);
@@ -63,24 +56,62 @@ namespace CH.CodeGenerator
             {
 
 
-                string result = service.RunCompile(index, string.Empty, null,  new  { Table=table,Cols=table.Columns }); 
-               
+                string result = service.RunCompile(index, string.Empty, null, new { Table = table, Cols = table.Columns });
+
                 //Console.WriteLine(result);
 
                 using (FileStream fs = new FileStream(table.TableName.ToUpper().ToPascal() + ".cs", FileMode.Create))
                 {
-                   using( StreamWriter sw = new StreamWriter(fs))
-                   {
-                       sw.Write(result);
-                   }
-                  
+                    using (StreamWriter sw = new StreamWriter(fs))
+                    {
+                        sw.Write(result);
+                    }
+
                 }
 
-               
-            } 
-        
+
+            }
+
         }
-     */
+
+    }
+
+
+    public static class Helper
+    {
+
+        public static string ToPascal(this string str)
+        {
+            var separator = new[] { '_', '-' };
+
+            StringBuilder sb = new StringBuilder();
+            string[] parts = str.Split(separator);
+            foreach (string part in parts)
+            {
+                if (part.Length > 0)
+                {
+                    sb.Append(Char.ToUpper(part[0]));
+                    if (part.Length > 1) sb.Append(part.Substring(1).ToLower());
+                }
+            }
+
+            return sb.ToString();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    
 
 
 

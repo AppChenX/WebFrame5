@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RazorEngine.Templating;
-using LinqToDB.SchemaProvider;
-using LinqToDB.SchemaProvider;
+using LinqToDB.SchemaProvider; 
 using LinqToDB.Data;
 namespace CH.CodeGenerator
 {

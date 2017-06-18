@@ -29,3 +29,5 @@
 		<add name="Northwind"        connectionString="Server=DBHost\SQLSERVER2012;Database=Northwind;User Id=sa;Password=TestPassword"  providerName="System.Data.SqlClient" />
 		<add name="NorthwindSqlite"  connectionString="Data Source=Database/Northwind.sqlite"  providerName="System.Data.SQLite" />
 	</connectionStrings>
+
+	

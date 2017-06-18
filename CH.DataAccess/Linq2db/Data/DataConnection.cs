@@ -598,8 +598,8 @@ namespace LinqToDB.Data
 				if (_connection.State == ConnectionState.Closed)
 				{
 					_connection.Open();
-                    log.Info($"Open Connection ConnectionString:{ConnectionString}");
-					_closeConnection = true;
+                    log.Info(string.Format("Open Connection ConnectionString:{0}", ConnectionString));
+                    _closeConnection = true;
 				}
 
 				return _connection;
@@ -631,7 +631,7 @@ namespace LinqToDB.Data
 			if (OnClosed != null)
 				OnClosed(this, EventArgs.Empty);
 
-            log.Info($"Close Connection ConnectionString:{ConnectionString}");
+            log.Info(string.Format("Close Connection ConnectionString:{0}", ConnectionString));
         }
 
 		#endregion
@@ -691,20 +691,22 @@ namespace LinqToDB.Data
 
 		internal int ExecuteNonQuery()
 		{
-			if (TraceSwitch.Level == TraceLevel.Off)
+
+            var info = new TraceInfo(TraceInfoStep.BeforeExecute)
+            {
+                TraceLevel = TraceSwitch.Level,
+                DataConnection = this,
+                Command = Command,
+            };
+
+            log.Info(info.SqlText);
+            if (TraceSwitch.Level == TraceLevel.Off)
 				return Command.ExecuteNonQuery();
 
 			if (OnTraceConnection == null)
 				return Command.ExecuteNonQuery();
 
-            var info = new TraceInfo(TraceInfoStep.BeforeExecute)
-            {
-                TraceLevel = TraceLevel.Info,
-                DataConnection = this,
-                Command = Command,
-            };
-
-            log.Info($"{info.SqlText.Replace("\r\n","")}");
+          
             if (TraceSwitch.TraceInfo)
             {
 
@@ -761,19 +763,28 @@ namespace LinqToDB.Data
 
 		object ExecuteScalar()
 		{
-			if (TraceSwitch.Level == TraceLevel.Off)
+
+            var info = new TraceInfo(TraceInfoStep.BeforeExecute)
+            {
+                TraceLevel = TraceSwitch.Level,
+                DataConnection = this,
+                Command = Command,
+            };
+
+            log.Info(info.SqlText);
+            if (TraceSwitch.Level == TraceLevel.Off)
 				return Command.ExecuteScalar();
 
 			if (OnTraceConnection == null)
 				return Command.ExecuteScalar();
 
-            var info = new TraceInfo(TraceInfoStep.BeforeExecute)
-            {
-                TraceLevel = TraceLevel.Info,
-                DataConnection = this,
-                Command = Command,
-            };
-            log.Info($"{info.SqlText.Replace("\r\n", "")}");
+            //var info = new TraceInfo(TraceInfoStep.BeforeExecute)
+            //{
+            //    TraceLevel = TraceLevel.Info,
+            //    DataConnection = this,
+            //    Command = Command,
+            //};
+            //log.Info(info.SqlText.Replace("\r\n", ""));
 
             if (TraceSwitch.TraceInfo)
 			{
@@ -831,27 +842,39 @@ namespace LinqToDB.Data
 
 		internal IDataReader ExecuteReader(CommandBehavior commandBehavior)
 		{
-			if (TraceSwitch.Level == TraceLevel.Off)
-				return Command.ExecuteReader(commandBehavior);
-
-			if (OnTraceConnection == null)
-				return Command.ExecuteReader(commandBehavior);
 
             var info = new TraceInfo(TraceInfoStep.BeforeExecute)
             {
-                TraceLevel = TraceLevel.Info,
+                TraceLevel = TraceSwitch.Level,
                 DataConnection = this,
                 Command = Command,
             };
 
-            log.Info($"{info.SqlText.Replace("\r\n", "")}");
+            log.Info(info.SqlText);
+            if (TraceSwitch.Level == TraceLevel.Off)
+            { 
+                
+                return Command.ExecuteReader(commandBehavior);
+            }
+
+			if (OnTraceConnection == null)
+            {
+
+               
+                return Command.ExecuteReader(commandBehavior);
+
+            }
+
+         
+
+          
 
             if (TraceSwitch.TraceInfo)
 			{
 				OnTraceConnection(info);
 			}
             
-         
+            
 
 			var now = DateTime.Now;
 

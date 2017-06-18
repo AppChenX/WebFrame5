@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CH.DataAccess, Version=1.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CH.DataAccess\bin\Debug.4.0\CH.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -165,6 +169,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Core\JObjectModelBinder.cs" />
+    <Compile Include="App_Start\Core\NamespaceHttpControllerSelector.cs" />
+    <Compile Include="App_Start\Core\RequestWrapper.cs" />
+    <Compile Include="App_Start\Core\RequestWrapperParameterBinding.cs" />
+    <Compile Include="App_Start\Core\StartWithConstraint.cs" />
     <Compile Include="App_Start\Filter\ApiPermissionAttribute.cs" />
     <Compile Include="App_Start\Filter\MenuPermissionAttribute.cs" />
     <Compile Include="App_Start\Json\FormatJsonResult.cs" />
@@ -2309,10 +2318,6 @@
     <ProjectReference Include="..\CH.Common\CH.Common.csproj">
       <Project>{e60a400c-1c84-4249-8b3d-5d2e3614f33c}</Project>
       <Name>CH.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CH.DataAccess\CH.DataAccess.csproj">
-      <Project>{7cbd2975-3d0c-4bc3-bb4e-932f910778cf}</Project>
-      <Name>CH.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\CH.Model\CH.Model.csproj">
       <Project>{298379b4-741d-452d-9e81-571ccfc9e253}</Project>
