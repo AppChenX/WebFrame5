@@ -22,3 +22,5 @@
 /CH.Web/logs
 /CH.Web/log
 /CH.Web/bin/CH.Web.dll.config
+/CH.CodeGenerator/obj
+/CH.CodeGenerator/bin
