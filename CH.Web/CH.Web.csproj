@@ -193,11 +193,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LinqToDB.Templates\CopyMe.Oracle.Managed1.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CopyMe.Oracle.Managed.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UserListHub.cs" />
@@ -1774,10 +1769,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="LinqToDB.Templates\CopyMe.Oracle.Managed.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CopyMe.Oracle.Managed1.generated.cs</LastGenOutput>
-    </Content>
+    <Content Include="readme-cooikes.txt" />
+    <Content Include="readme-logging.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -1805,32 +1798,6 @@
     <Content Include="Areas\Sys\Views\SysUser\Index.cshtml" />
     <Content Include="Areas\Sys\Views\SysUser\IP.cshtml" />
     <Content Include="Areas\Sys\Views\Web.config" />
-    <Content Include="LinqToDB.Templates\DataAnnotations.ttinclude" />
-    <Content Include="LinqToDB.Templates\DataModel.ttinclude" />
-    <Content Include="LinqToDB.Templates\EditableObject.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Access.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.DB2.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Firebird.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Informix.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.MySql.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Oracle.Managed.Tools.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Oracle.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.PostgreSQL.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SapHana.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SqlCe.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SQLite.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Sybase.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Tools.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.ttinclude" />
-    <Content Include="LinqToDB.Templates\NotifyDataErrorInfo.ttinclude" />
-    <Content Include="LinqToDB.Templates\NotifyPropertyChanged.ttinclude" />
-    <Content Include="LinqToDB.Templates\ObsoleteAttributes.ttinclude" />
-    <Content Include="LinqToDB.Templates\PluralizationService.ttinclude" />
-    <Content Include="LinqToDB.Templates\README.md" />
-    <Content Include="LinqToDB.Templates\T4Model.ttinclude" />
-    <Content Include="LinqToDB.Templates\Validation.ttinclude" />
     <Content Include="log4net.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui\easyui-lang-zh_CN.js" />
