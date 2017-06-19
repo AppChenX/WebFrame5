@@ -232,7 +232,6 @@
     <Compile Include="RazorEngine\Text\IEncodedStringFactory.cs" />
     <Compile Include="RazorEngine\Text\RawString.cs" />
     <Compile Include="RazorEngine\Text\RawStringFactory.cs" />
-    <Compile Include="Template\myTemplate.cs" />
     <EmbeddedResource Include="frmConnection.resx">
       <DependentUpon>frmConnection.cs</DependentUpon>
     </EmbeddedResource>

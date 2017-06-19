@@ -46,7 +46,7 @@ namespace CH.CodeGenerator
 
             //Write a int32 value
             iniFile.WriteValue("Template", "file", txtPath.Text);
-
+            iniFile.WriteValue("Template", "outdir", txtoutDir.Text);
             this.DialogResult = DialogResult.OK;
         }
 
@@ -63,7 +63,7 @@ namespace CH.CodeGenerator
                 if(fld.ShowDialog()==DialogResult.OK)
                 {
                     txtoutDir.Text=fld.SelectedPath;
-                    iniFile.WriteValue("Template", "outdir", fld.SelectedPath);
+                  
 
                 }
             }
