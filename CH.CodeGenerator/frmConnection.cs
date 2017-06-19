@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CH.Common.Utility;
+using LinqToDB.DataProvider;
+using LinqToDB.Data;
 namespace CH.CodeGenerator
 {
     public partial class frmConnection : Form
@@ -49,8 +51,25 @@ namespace CH.CodeGenerator
         /// <param name="e"></param>
         private void btnTest_Click(object sender, EventArgs e)
         {
+            if (con == null) return;
 
-        }
+            var dataProvider = (DataProvider)Enum.Parse(typeof(DataProvider), combDataProvider.SelectedItem.ToString(), false);
+            IDataProvider provider = dataProvider.GetDataProvider();
+
+            try
+            {
+                using (var db = new DataConnection(provider, txtConStr.Text.Trim()))
+                { 
+                    var con_db = db.Connection;
+                }
+
+                MessageBox.Show("Successful", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch
+            {
+                MessageBox.Show("Connect Failed","错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+            }
 
         /// <summary>
         /// 向XML文件中写数据

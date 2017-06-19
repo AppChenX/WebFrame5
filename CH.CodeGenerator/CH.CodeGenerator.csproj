@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="ConnectionStr.cs" />
     <Compile Include="CustomTemplateBase.cs" />
+    <Compile Include="DataProviderHelper.cs" />
     <Compile Include="frmConnection.cs">
       <SubType>Form</SubType>
     </Compile>
