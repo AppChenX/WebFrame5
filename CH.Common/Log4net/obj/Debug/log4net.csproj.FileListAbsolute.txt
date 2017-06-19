@@ -1,5 +1,0 @@
-D:\PrivateCode\WebFrame5\build\bin\net\4.5\debug\log4net.dll
-D:\PrivateCode\WebFrame5\build\bin\net\4.5\debug\log4net.pdb
-D:\PrivateCode\WebFrame5\build\bin\net\4.5\debug\log4net.xml
-D:\PrivateCode\WebFrame5\log4net\obj\Debug\log4net.dll
-D:\PrivateCode\WebFrame5\log4net\obj\Debug\log4net.pdb
