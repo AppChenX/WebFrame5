@@ -269,6 +269,7 @@
     <None Include="Template\testdb2linq.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Libs\ICSharpCode.TextEditor.dll" />
     <Content Include="Libs\linq2db.dll" />
     <Content Include="Libs\MySql.Data.dll" />
     <Content Include="Libs\Oracle.ManagedDataAccess.dll" />
