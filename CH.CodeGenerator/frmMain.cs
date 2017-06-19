@@ -13,11 +13,18 @@ using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.SchemaProvider;
 using LinqToDB.DataProvider;
-
+using CH.Common.Utility;
+using RazorEngine.Templating;
+using RazorEngine.Configuration;
 namespace CH.CodeGenerator
 {
     public partial class frmMain : Form
     {
+
+        IniFile iniFile = new IniFile("Settings.ini");
+
+        SerializerXML<ConnectionStrs> con = new SerializerXML<ConnectionStrs>("config.xml");
+
         /// <summary>
         /// 获取选中TextEditorControl
         /// </summary>
@@ -63,27 +70,34 @@ namespace CH.CodeGenerator
         public frmMain()
         {
             InitializeComponent();
+
+            chklstbx_Tables.Items.Clear();
+            ///加载数据
+            var cons = con.GetObj();
+
+            if (cons != null)
+            {
+                var database = cons.ConnectionStrList.Where(m => m.Checked).FirstOrDefault();
+
+                LoadDataBaseTable(database);
+            }
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            chklstbx_Tables.Items.Clear();
 
-            //List<Student> lst = new List<Student>() { new Student() { Id = "1", Name = "测试1" }, new Student() { Id = "2", Name = "测试2" } }; 
+            //string path = iniFile.GetString("Template", "file", "");
 
-            //chklstbx_Tables.DataSource = lst;
+            //if(System.IO.File.Exists(path))
+            //{
+            //    var editor = AddNewTextEditor(path);
 
-            //chklstbx_Tables.DisplayMember = "Name";
+            //    editor.LoadFile(path);
+            //}
 
-            //chklstbx_Tables.ValueMember = "Id";
-
-        }
-
-        private void btnGenerator_Click(object sender, EventArgs e)
-        {
-
-
-        }
+           
+        } 
+       
 
         private void ToolStripMenuItem_open_Click(object sender, EventArgs e)
         {
@@ -104,10 +118,7 @@ namespace CH.CodeGenerator
 
         }
 
-        private void btnGenerator_Click_1(object sender, EventArgs e)
-        {
-            MessageBox.Show(ActiveEditor.Parent.ToString());
-        }
+       
 
         private void ToolStripMenuItem_save_Click(object sender, EventArgs e)
         {
@@ -147,14 +158,8 @@ namespace CH.CodeGenerator
                 }
             }
         }
-
-        public class Student
-        {
-            public string Id { get; set; }
-
-            public string Name { get; set; }
-        }
-
+         
+     
         /// <summary>
         /// 设置连接字符串
         /// </summary>
@@ -162,26 +167,19 @@ namespace CH.CodeGenerator
         /// <param name="e"></param>
         private void ToolStripMenuItem_settings_Click(object sender, EventArgs e)
         {
+            using (var frm = new frmTemplate())
+            {
 
+                frm.ShowDialog();
+            }
         }
 
         private void loadDataBaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var frm = new frmSetting((con) =>
-            {
-
-                try
-                {
-
-                    //加载表
-                    LoadDataBaseTable(con);
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-
+            using (var frm = new frmSetting((m) =>
+            { 
+                    LoadDataBaseTable(m);
+                
             }))
             {
                 frm.ShowDialog();
@@ -190,22 +188,46 @@ namespace CH.CodeGenerator
 
 
         private void LoadDataBaseTable(ConnectionStr con)
-        {
-
+        { 
+            if (con == null) return;
             IDataProvider provider = GetDataProvider(con.Provider);
-            using (var db = new DataConnection(provider, con.Value))
+
+            try
             {
+                using (var db = new DataConnection(provider, con.Value))
+                {
 
-                var sp = db.DataProvider.GetSchemaProvider();
-                var schema = sp.GetSchema(db);  
-                var tables = schema.Tables;
+                    var sp = db.DataProvider.GetSchemaProvider();
+                    var schema = sp.GetSchema(db);
 
-                SetDataSource(tables);
-                
+                    using (BackgroundWorker bk = new BackgroundWorker())
+                    {
 
+                        bk.DoWork += (a, b) =>
+                        {
+
+                            b.Result = schema.Tables;
+
+                        };
+                        bk.RunWorkerCompleted += (c, d) =>
+                        {
+
+                            if (d.Result != null)
+                            {
+                                SetDataSource(d.Result);
+                            }
+                        };
+                        bk.RunWorkerAsync();
+                    }
+
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            //DataContext db = new DataContext(lin, constr);
+            
 
         }
 
@@ -253,7 +275,7 @@ namespace CH.CodeGenerator
 
         }
 
-        private void SetDataSource(List<LinqToDB.SchemaProvider.TableSchema> source)
+        private void SetDataSource(object source)
         {
             chklstbx_Tables.DataSource = source;
             chklstbx_Tables.DisplayMember = "TableName";
@@ -264,8 +286,66 @@ namespace CH.CodeGenerator
         private void ToolStripMenuItem_execute_Click(object sender, EventArgs e)
         {
 
+            string path = iniFile.GetString("Template", "file", "");
+
+            string outDir = iniFile.GetString("Template", "outdir", "");
+
+            //获取选中的表
+
+            var tables= chklstbx_Tables.CheckedItems.OfType<TableSchema>().ToList();
              
 
+            if (tables.Count == 0) return;
+
+            GeneraterCodeAuto(outDir, path, tables, m => {
+
+                var editor = AddNewTextEditor(m);
+
+                editor.LoadFile(m);
+            });
+
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="outDir">输出目录</param>
+        /// <param name="fileName">模板名称</param>
+        /// <param name="tables"></param>
+        /// <param name="generatorComplete">生成完成后</param>
+        private void GeneraterCodeAuto(string outDir,string fileName,List<TableSchema> tables,Action<string> generatorComplete)
+        {
+            string index = System.IO.File.ReadAllText("testdb2linq.cshtml", System.Text.Encoding.UTF8);
+            var config = new TemplateServiceConfiguration();
+            config.BaseTemplateType = typeof(CustomTemplateBase<>);
+            //config.Debug = true;
+            using (var service = RazorEngineService.Create(config))
+            {
+
+                foreach(var table in tables)
+                {
+                    string result = service.RunCompile(index, string.Empty, null, new { Table = table });
+
+                    string rsFile = string.Format("{0}.cs",Path.Combine(outDir,table.TableName.ToUpper().ToPascal()));
+                    WriteFile(rsFile, result);
+                    generatorComplete(rsFile);
+                } 
+
+            }
+        }
+
+        private void WriteFile(string fileName,string result)
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.Create))
+            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
+                    sw.Write(result);
+                }
+
+            }
         }
     }
 }

@@ -14,40 +14,20 @@ namespace CH.CodeGenerator
         public CustomTemplateBase()
         {
 
-            this.HtmlHelper = new HtmlHelper();
+            this.Helper = new Helper();
         }
 
-        public HtmlHelper HtmlHelper { get; set; }
+         public Helper Helper { get; set; }
 
     }
 
-    public class HtmlHelper
+    public class Helper
     {
         public string ToUpper(string str)
         {
             return str.ToUpper();
         }
-
-        //[Column(Name = "Action_Id", CanBeNull = false)]
-        private string ColumnProperty(ColumnSchema col)
-        {
-
-            string rs = string.Empty;
-
-            if(col.IsPrimaryKey)
-            {
-                rs += "[PrimaryKey]\r\n";
-            } 
-            rs += string.Format("[Column(Name=\"{0}\",CanBeNull={1},IsIdentity={2}", col.ColumnName.ToUpper(), (!col.IsNullable).ToString().ToLower(),col.IsIdentity.ToString().ToLower());  
-
-            return rs;
-
-        }
-
-
          
-       
-
         /// <summary>
         /// 转换成Pascal字符串
         /// </summary>
