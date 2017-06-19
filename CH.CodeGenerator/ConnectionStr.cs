@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using LinqToDB.DataProvider;
 namespace CH.CodeGenerator
 {
 
@@ -26,5 +27,7 @@ namespace CH.CodeGenerator
         public string Value { get; set; }
         [XmlAttribute(AttributeName = "Checked")]
         public bool Checked { get; set; }
+        [XmlAttribute(AttributeName = "Provider")]
+        public DataProvider Provider { get; set; }
     }
 }

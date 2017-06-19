@@ -17,6 +17,8 @@ namespace CH.CodeGenerator
         {
             InitializeComponent();
 
+            chklstbox_constr.ItemCheck += Chklstbox_constr_ItemCheck;
+
             ser = new SerializerXML<ConnectionStrs>("config.xml");
 
             //绑定数据
@@ -28,12 +30,30 @@ namespace CH.CodeGenerator
                 var lst = cons.ConnectionStrList;
                 if (lst != null)
                 {
-                    SetDataSource(lst);
-                    //chklstbox_constr.DataSource = lst;
-                    //chklstbox_constr.DisplayMember = "Id";
-                    //chklstbox_constr.ValueMember = "Name";
+                    SetDataSource(lst); 
                 }
             }
+        }
+        private Action<ConnectionStr> OkHandler;
+        public frmSetting(Action<ConnectionStr> OkHandler) :this()
+        {
+            this.OkHandler = OkHandler;
+        }
+
+        private void Chklstbox_constr_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+             
+
+            for (int i = 0; i < chklstbox_constr.CheckedIndices.Count; i++)
+            {
+                if (chklstbox_constr.CheckedIndices[i] != e.Index)
+                {
+                    chklstbox_constr.SetItemChecked(chklstbox_constr.CheckedIndices[i], false);
+                }
+            }
+
+
+
         }
 
 
@@ -59,6 +79,18 @@ namespace CH.CodeGenerator
             chklstbox_constr.DataSource = lst;
             chklstbox_constr.DisplayMember = "Name";
             chklstbox_constr.ValueMember = "ID";
+
+            //选择中
+
+            foreach(var item in lst as IList<ConnectionStr>)
+            {
+
+               if(item.Checked)
+                {
+                    chklstbox_constr.SetItemChecked(chklstbox_constr.Items.IndexOf(item), true);
+                }
+
+            }
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -124,6 +156,51 @@ namespace CH.CodeGenerator
                 //chklstbox_constr.Items.Remove(item);
 
             }
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+
+            var ccount= chklstbox_constr.CheckedItems.Count;
+             
+            if (ccount == 1)
+            {
+                var cons = ser.GetObj();
+
+                var item = chklstbox_constr.CheckedItems[0] as ConnectionStr;
+
+                ConnectionStr rs = null;
+
+                cons.ConnectionStrList.ForEach(m =>
+                {
+
+                    if (m.Id == item.Id)
+                    {
+                        rs = m;
+                        m.Checked = true;
+                    }
+                    else
+                        m.Checked = false;
+                });
+
+                ser.Save(cons);
+
+                OkHandler(rs);
+
+                this.DialogResult = DialogResult.OK;
+            }
+
+            else
+            {
+                MessageBox.Show("选择一个连接字符串", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+              
+            }
+            
+            //设置选中
+
+
+
+
         }
     }
 }

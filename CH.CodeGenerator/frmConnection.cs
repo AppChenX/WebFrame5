@@ -20,6 +20,10 @@ namespace CH.CodeGenerator
         public frmConnection()
         {
             InitializeComponent();
+
+            combDataProvider.DataSource = System.Enum.GetNames( typeof(DataProvider));
+
+            //(TestEnum)Enum.Parse(typeof(TestEnum), cbo.SelectedItem.ToString(), false)
         }
 
         public frmConnection(EditType editType,Action<ConnectionStrs> okHandler) : this()
@@ -34,6 +38,8 @@ namespace CH.CodeGenerator
 
             this.txtConStr.Text = con.Value;
             this.txtName.Text = con.Name;
+            combDataProvider.SelectedIndex = this.combDataProvider.FindString(con.Provider.ToString());
+            //this.combDataProvider.SelectedValue = con.Provider;
         }
 
         /// <summary>
@@ -54,10 +60,12 @@ namespace CH.CodeGenerator
         private void bntOk_Click(object sender, EventArgs e)
         {
 
-            if(string.IsNullOrEmpty(txtConStr.Text.Trim())|| string.IsNullOrEmpty(txtName.Text.Trim()))
+            if(string.IsNullOrEmpty(txtConStr.Text.Trim())|| string.IsNullOrEmpty(txtName.Text.Trim())||string.IsNullOrEmpty(combDataProvider.Text.Trim()))
             {
                 return;
             }
+
+            var dataProvider =(DataProvider)Enum.Parse(typeof(DataProvider), combDataProvider.SelectedItem.ToString(), false) ;
 
             ConnectionStrs cons = null;
             cons = ser.GetObj();
@@ -72,10 +80,11 @@ namespace CH.CodeGenerator
                    var con_old=  cons.ConnectionStrList.Where(m => m.Id == con.Id).FirstOrDefault();
                     con_old.Name = txtName.Text.Trim();
                     con_old.Value = txtConStr.Text.Trim();
+                    con_old.Provider = dataProvider;
                 }
                 else
                 {
-                    cons.ConnectionStrList.Add(new ConnectionStr() { Checked = false, Name = txtName.Text.Trim(), Value = txtConStr.Text.Trim(), Id = GenerateIntID().ToString() });
+                    cons.ConnectionStrList.Add(new ConnectionStr() { Checked = false, Name = txtName.Text.Trim(), Value = txtConStr.Text.Trim(), Id = GenerateIntID().ToString(),Provider= dataProvider });
                 }
 
                  
@@ -88,7 +97,7 @@ namespace CH.CodeGenerator
                 {
                     ConnectionStrList = new List<ConnectionStr>() {
 
-                        new ConnectionStr(){ Checked=false, Name=txtName.Text.Trim(), Value=txtConStr.Text.Trim(), Id=GenerateIntID().ToString()}
+                        new ConnectionStr(){ Checked=false, Name=txtName.Text.Trim(), Value=txtConStr.Text.Trim(), Id=GenerateIntID().ToString(),Provider= dataProvider }
                     }
                 };
                
@@ -106,8 +115,10 @@ namespace CH.CodeGenerator
             return BitConverter.ToInt64(buffer, 0);
         }
 
+        private void frmConnection_Load(object sender, EventArgs e)
+        {
 
-
+        }
     }
 
     /// <summary>
@@ -118,5 +129,17 @@ namespace CH.CodeGenerator
         New=0,
 
         Edit=1
+    }
+
+    public enum DataProvider
+    { 
+        Sqlserver2000=0,
+        Sqlserver2005 = 1,
+        Sqlserver2008 = 2,
+        Sqlserver2010 = 3,
+        MySql =4,
+        Oracle=5,
+        Sqlite=6,
+        Access=7
     }
 }

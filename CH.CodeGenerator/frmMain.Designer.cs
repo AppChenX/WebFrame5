@@ -231,6 +231,7 @@
             this.ToolStripMenuItem_execute.ShortcutKeys = System.Windows.Forms.Keys.F8;
             this.ToolStripMenuItem_execute.Size = new System.Drawing.Size(160, 22);
             this.ToolStripMenuItem_execute.Text = "&Execute";
+            this.ToolStripMenuItem_execute.Click += new System.EventHandler(this.ToolStripMenuItem_execute_Click);
             // 
             // frmMain
             // 
