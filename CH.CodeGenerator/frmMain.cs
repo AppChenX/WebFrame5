@@ -265,6 +265,12 @@ namespace CH.CodeGenerator
 
             string outDir = iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_outDirectory, "");
 
+            if(!File.Exists(path))
+            {
+                MessageBox.Show("模板文件不存在!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (string.IsNullOrEmpty(outDir))
             {
                 outDir = string.Format(@"{0}\{1}",Application.StartupPath, "GeneratorCode");/*Path.Combine(Application.StartupPath,"/GeneratorCode");*/
