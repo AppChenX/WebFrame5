@@ -355,8 +355,16 @@ namespace CH.CodeGenerator
             if (cons != null)
             {
                 var database = cons.ConnectionStrList.Where(m => m.Checked).FirstOrDefault();
+                
+                if(database!=null)
+                {
+                    LoadDataBaseTable(database);
+                }
+                else {
 
-                LoadDataBaseTable(database);
+                    MessageBox.Show("请选择一个默认的数据库连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+              
             }
             //var cons= ser.GetObj();
 

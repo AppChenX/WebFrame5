@@ -44,6 +44,14 @@ namespace CH.Common.Utility
             XmlWriterSettings sets = new XmlWriterSettings();
             sets.Encoding = Encoding.UTF8;
             sets.OmitXmlDeclaration = false;
+
+
+            FileInfo fileInfo = new FileInfo(fileName);
+
+            if(!Directory.Exists(fileInfo.Directory.FullName))
+            {
+                Directory.CreateDirectory(fileInfo.Directory.FullName);
+            }
             using (FileStream fs = new FileStream(fileName, FileMode.Create))
             { 
                     XmlWriter writer = XmlWriter.Create(fs, sets);

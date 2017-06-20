@@ -18,8 +18,7 @@ namespace CH.CodeGenerator
             InitializeComponent();
 
             chklstbox_constr.ItemCheck += Chklstbox_constr_ItemCheck;
-
-          
+             
 
             //绑定数据
 
@@ -40,6 +39,12 @@ namespace CH.CodeGenerator
             this.OkHandler = OkHandler;
         }
 
+
+        /// <summary>
+        /// 设置只能单选
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Chklstbox_constr_ItemCheck(object sender, ItemCheckEventArgs e)
         {
              

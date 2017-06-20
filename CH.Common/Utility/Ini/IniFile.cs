@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
-
+using System.IO;
 namespace CH.Common.Utility
 {
     /// <summary>
@@ -512,6 +512,14 @@ namespace CH.Common.Utility
         /// </exception>
         private void WriteValueInternal(string sectionName, string keyName, string value)
         {
+
+            FileInfo fileInfo = new FileInfo(m_path);
+
+            if (!Directory.Exists(fileInfo.Directory.FullName))
+            {
+                Directory.CreateDirectory(fileInfo.Directory.FullName);
+            }
+
             if (!NativeMethods.WritePrivateProfileString(sectionName, keyName, value, m_path))
             {
                 throw new System.ComponentModel.Win32Exception();
