@@ -21,10 +21,10 @@ namespace CH.CodeGenerator
     public partial class frmMain : Form
     {
 
-        IniFile iniFile = new IniFile("Settings.ini");
+        IniFile iniFile = new IniFile(Constant.iniFileName);
 
-        SerializerXML<ConnectionStrs> con = new SerializerXML<ConnectionStrs>("config.xml");
-
+        SerializerXML<ConnectionStrs> ser = new SerializerXML<ConnectionStrs>(Constant.xmlFileName);
+        private List<TableSchema> ts = null;
         /// <summary>
         /// 获取选中TextEditorControl
         /// </summary>
@@ -44,10 +44,18 @@ namespace CH.CodeGenerator
 
 
 
-        private TextEditorControl AddNewTextEditor(string title)
+        private TextEditorControl AddNewTextEditor(string title,string path)
         {
-            var tab = new TabPage(title);
 
+          var  exitsTabs= fileTabs.TabPages.OfType<TabPage>().Where(m => m.Tag.ToString() == path).FirstOrDefault();
+
+            if(exitsTabs!=null)
+            {
+                fileTabs.TabPages.Remove(exitsTabs);
+            }
+
+            var tab = new TabPage(title);
+            tab.Tag = path;
             var editor = new TextEditorControl();
             editor.Dock = System.Windows.Forms.DockStyle.Fill;
             editor.IsReadOnly = false;
@@ -73,14 +81,21 @@ namespace CH.CodeGenerator
 
             chklstbx_Tables.Items.Clear();
             ///加载数据
-            var cons = con.GetObj();
+            ///
+            txtFilter.TextChanged += TxtFilter_TextChanged;
 
-            if (cons != null)
-            {
-                var database = cons.ConnectionStrList.Where(m => m.Checked).FirstOrDefault();
 
-                LoadDataBaseTable(database);
+        }
+
+        private void TxtFilter_TextChanged(object sender, EventArgs e)
+        {
+           
+            if(ts!=null)
+            { 
+                var source = ts.Where(m => m.TableName.Contains(txtFilter.Text.Trim())).ToList(); 
+                SetDataSource(source);
             }
+
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -109,7 +124,11 @@ namespace CH.CodeGenerator
                 if (openFile.ShowDialog() == DialogResult.OK)
                 {
 
-                    var editor = AddNewTextEditor(openFile.FileName);
+                    string path = openFile.FileName;
+
+                    string file= path.Split(new string[] { "\\"},StringSplitOptions.None).ToList().Last();
+
+                    var editor = AddNewTextEditor(file,path);
 
                     editor.LoadFile(openFile.FileName);
                 }
@@ -176,16 +195,10 @@ namespace CH.CodeGenerator
 
         private void loadDataBaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var frm = new frmSetting((m) =>
-            { 
-                    LoadDataBaseTable(m);
-                
-            }))
-            {
-                frm.ShowDialog();
-            }
+          
         }
 
+      
 
         private void LoadDataBaseTable(ConnectionStr con)
         { 
@@ -206,14 +219,16 @@ namespace CH.CodeGenerator
                         bk.DoWork += (a, b) =>
                         {
 
-                            b.Result = schema.Tables;
+                            ts= schema.Tables;
+                            b.Result = ts;
+
 
                         };
                         bk.RunWorkerCompleted += (c, d) =>
                         {
 
                             if (d.Result != null)
-                            {
+                            { 
                                 SetDataSource(d.Result);
                             }
                         };
@@ -225,6 +240,8 @@ namespace CH.CodeGenerator
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                ts = null;
             }
 
             
@@ -244,10 +261,19 @@ namespace CH.CodeGenerator
         private void ToolStripMenuItem_execute_Click(object sender, EventArgs e)
         {
 
-            string path = iniFile.GetString("Template", "file", "");
+            string path = iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_templateFile, "");
 
-            string outDir = iniFile.GetString("Template", "outdir", "");
+            string outDir = iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_outDirectory, "");
 
+            if (string.IsNullOrEmpty(outDir))
+            {
+                outDir = string.Format(@"{0}\{1}",Application.StartupPath, "GeneratorCode");/*Path.Combine(Application.StartupPath,"/GeneratorCode");*/
+
+                if(!Directory.Exists(outDir))
+                {
+                    Directory.CreateDirectory(outDir);
+                }
+            }
             //获取选中的表
 
             var tables= chklstbx_Tables.CheckedItems.OfType<TableSchema>().ToList();
@@ -257,7 +283,11 @@ namespace CH.CodeGenerator
 
             GeneraterCodeAuto(outDir, path, tables, m => {
 
-                var editor = AddNewTextEditor(m);
+
+                //string path = openFile.FileName;
+
+                //string file = path.Split(new string[] { "\\" }, StringSplitOptions.None).ToList().Last();
+                var editor = AddNewTextEditor(m.Split(new string[] { "\\" }, StringSplitOptions.None).ToList().Last(), m);
 
                 editor.LoadFile(m);
             });
@@ -275,7 +305,7 @@ namespace CH.CodeGenerator
         /// <param name="generatorComplete">生成完成后</param>
         private void GeneraterCodeAuto(string outDir,string fileName,List<TableSchema> tables,Action<string> generatorComplete)
         {
-            string index = System.IO.File.ReadAllText("testdb2linq.cshtml", System.Text.Encoding.UTF8);
+            string index = System.IO.File.ReadAllText(fileName, System.Text.Encoding.UTF8);
             var config = new TemplateServiceConfiguration();
             config.BaseTemplateType = typeof(CustomTemplateBase<>);
             //config.Debug = true;
@@ -301,6 +331,62 @@ namespace CH.CodeGenerator
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
                     sw.Write(result);
+                }
+
+            }
+        }
+
+        private void ToolStripMenuItem_connectionStr_Click(object sender, EventArgs e)
+        {
+            using (var frm = new frmSetting((m) =>
+            {
+                //LoadDataBaseTable(m);
+
+            }))
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void ToolStripMenuItem_loadTables_Click(object sender, EventArgs e)
+        {
+            var cons = ser.GetObj();
+
+            if (cons != null)
+            {
+                var database = cons.ConnectionStrList.Where(m => m.Checked).FirstOrDefault();
+
+                LoadDataBaseTable(database);
+            }
+            //var cons= ser.GetObj();
+
+            //if(cons!=null)
+            //{
+            //    var cons_lst = cons.ConnectionStrList;
+
+            //    if(cons_lst!=null)
+            //    {
+            //        var con = cons_lst.Where(m => m.Checked).FirstOrDefault();
+
+            //        if(con!=null)
+            //        {
+            //            LoadDataBaseTable(con);
+            //        }
+            //    } 
+
+            //}
+
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            if(chklstbx_Tables.Items.Count>0)
+            {
+                 
+               for(int i=0;i<chklstbx_Tables.Items.Count;i++)
+                {
+                    chklstbx_Tables.SetItemChecked(i, false);
                 }
 
             }

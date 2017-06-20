@@ -2,7 +2,7 @@
 @using CH.CodeGenerator
 @using System.Net
 @using LinqToDB.SchemaProvider
-@using LinqToDB.Data; 
+@using LinqToDB.Data;
 @using System.Collections.Generic
 using System;
 using System.Collections.Generic;
@@ -20,29 +20,40 @@ DateTime：@DateTime.Now
 namespace CH.Model
 {  
   @{ 
-	 var cols=Model.Table.Columns ;  
-	 
- } 
-public class @Helper.ToPascal(Model.Table.TableName) {   
-	 @foreach(var item in cols)
-	 { 
-		if(item.IsPrimaryKey){ 
-        <text>[PrimaryKey]</text>	
+	 var cols = Model.Table.Columns;
+    var tableName = Model.Table.TableName;
+
+}
+[Table(Name = "@tableName")]
+public class @Helper.ToPascal(tableName)
+{
+    @foreach(var item in cols)
+
+     {
+        if (item.IsPrimaryKey)
+        {
+        < text >[PrimaryKey] </ text >
 		@("\r")
-		}
-		if(item.IsIdentity){ 
-        <text>[Identity]</text>	
+
+        }
+        if (item.IsIdentity)
+        {
+        < text >[Identity] </ text >
 		@("\r")
-		}
-		<text>[Column(Name = "@item.ColumnName",CanBeNull=@(item.IsNullable?"false":"true"))]</text>
+
+        }
+
+        < text >[Column(Name = "@item.ColumnName", CanBeNull =@(item.IsNullable ? "false" : "true"))] </ text >
 		@("\r")
-		<text>public </text>@item.MemberType<text>  </text>@Helper.ToPascal(item.ColumnName) 
-		<text>
-		{
-		  get;
-		  set;
-		}
-		</text> 
-     } 
- } 
+        < text >public </ text > @item.MemberType<text> </ text > @Helper.ToPascal(item.ColumnName)
+          < text >
+
+        {
+            get;
+            set;
+        }
+
+        </ text >
+     }
+} 
 }

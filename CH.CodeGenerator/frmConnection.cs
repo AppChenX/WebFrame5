@@ -17,7 +17,7 @@ namespace CH.CodeGenerator
         private EditType editType { get; set; }
         private ConnectionStr con { get; set; }
         private Action<ConnectionStrs> okHandler { get; set; }
-        SerializerXML<ConnectionStrs> ser = new SerializerXML<ConnectionStrs>("config.xml");
+        SerializerXML<ConnectionStrs> ser = new SerializerXML<ConnectionStrs>(Constant.xmlFileName);
 
         public frmConnection()
         {

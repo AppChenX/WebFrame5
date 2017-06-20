@@ -12,14 +12,15 @@ namespace CH.CodeGenerator
 {
     public partial class frmTemplate : Form
     {
-        IniFile iniFile = new IniFile("Settings.ini");
+        IniFile iniFile = new IniFile(Constant.iniFileName);
+
         public frmTemplate()
         {
             InitializeComponent();
 
-            string path= iniFile.GetString("Template", "file","");
+            string path= iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_templateFile, "");
 
-            string dir= iniFile.GetString("Template", "outdir", "");
+            string dir= iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_outDirectory, "");
             txtPath.Text = path;
             txtoutDir.Text = dir;
         }
@@ -42,11 +43,31 @@ namespace CH.CodeGenerator
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-           
+          
+            if(string.IsNullOrEmpty(txtPath.Text))
+            {
+                MessageBox.Show("模板文件不能为空", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if(!System.IO.File.Exists(txtPath.Text.Trim()))
+            {
+                MessageBox.Show("不存在此文件模板", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if(!string.IsNullOrEmpty(txtoutDir.Text))
+            {
+                if(!System.IO.Directory.Exists(txtoutDir.Text.Trim()))
+                {
+                    MessageBox.Show("不存在此路径", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             //Write a int32 value
-            iniFile.WriteValue("Template", "file", txtPath.Text);
-            iniFile.WriteValue("Template", "outdir", txtoutDir.Text);
+            iniFile.WriteValue(Constant.ini_Section_name, Constant.ini_Section_templateFile, txtPath.Text);
+            iniFile.WriteValue(Constant.ini_Section_name, Constant.ini_Section_outDirectory, txtoutDir.Text);
             this.DialogResult = DialogResult.OK;
         }
 

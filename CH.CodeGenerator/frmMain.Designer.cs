@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_open = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,6 +39,10 @@
             this.ToolStripMenuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_connectionStr = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_Generator = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_loadTables = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_execute = new System.Windows.Forms.ToolStripMenuItem();
             this.panel4 = new System.Windows.Forms.Panel();
             this.fileTabs = new System.Windows.Forms.TabControl();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -45,9 +50,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.txtFilter = new System.Windows.Forms.TextBox();
-            this.ToolStripMenuItem_Generator = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadDataBaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem_execute = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnClear = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -129,7 +132,8 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_settings});
+            this.ToolStripMenuItem_settings,
+            this.ToolStripMenuItem_connectionStr});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(66, 21);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -138,9 +142,42 @@
             // 
             this.ToolStripMenuItem_settings.Name = "ToolStripMenuItem_settings";
             this.ToolStripMenuItem_settings.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
-            this.ToolStripMenuItem_settings.Size = new System.Drawing.Size(161, 22);
+            this.ToolStripMenuItem_settings.Size = new System.Drawing.Size(198, 22);
             this.ToolStripMenuItem_settings.Text = "&Settings";
             this.ToolStripMenuItem_settings.Click += new System.EventHandler(this.ToolStripMenuItem_settings_Click);
+            // 
+            // ToolStripMenuItem_connectionStr
+            // 
+            this.ToolStripMenuItem_connectionStr.Name = "ToolStripMenuItem_connectionStr";
+            this.ToolStripMenuItem_connectionStr.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
+            this.ToolStripMenuItem_connectionStr.Size = new System.Drawing.Size(198, 22);
+            this.ToolStripMenuItem_connectionStr.Text = "&ConnectionStr";
+            this.ToolStripMenuItem_connectionStr.Click += new System.EventHandler(this.ToolStripMenuItem_connectionStr_Click);
+            // 
+            // ToolStripMenuItem_Generator
+            // 
+            this.ToolStripMenuItem_Generator.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_loadTables,
+            this.ToolStripMenuItem_execute});
+            this.ToolStripMenuItem_Generator.Name = "ToolStripMenuItem_Generator";
+            this.ToolStripMenuItem_Generator.Size = new System.Drawing.Size(79, 21);
+            this.ToolStripMenuItem_Generator.Text = "Generator";
+            // 
+            // ToolStripMenuItem_loadTables
+            // 
+            this.ToolStripMenuItem_loadTables.Name = "ToolStripMenuItem_loadTables";
+            this.ToolStripMenuItem_loadTables.ShortcutKeys = System.Windows.Forms.Keys.F7;
+            this.ToolStripMenuItem_loadTables.Size = new System.Drawing.Size(164, 22);
+            this.ToolStripMenuItem_loadTables.Text = "&LoadTables";
+            this.ToolStripMenuItem_loadTables.Click += new System.EventHandler(this.ToolStripMenuItem_loadTables_Click);
+            // 
+            // ToolStripMenuItem_execute
+            // 
+            this.ToolStripMenuItem_execute.Name = "ToolStripMenuItem_execute";
+            this.ToolStripMenuItem_execute.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.ToolStripMenuItem_execute.Size = new System.Drawing.Size(164, 22);
+            this.ToolStripMenuItem_execute.Text = "&Execute";
+            this.ToolStripMenuItem_execute.Click += new System.EventHandler(this.ToolStripMenuItem_execute_Click);
             // 
             // panel4
             // 
@@ -173,6 +210,7 @@
             // 
             // chklstbx_Tables
             // 
+            this.chklstbx_Tables.CheckOnClick = true;
             this.chklstbx_Tables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chklstbx_Tables.FormattingEnabled = true;
             this.chklstbx_Tables.Items.AddRange(new object[] {
@@ -185,6 +223,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.btnClear);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.txtFilter);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
@@ -206,32 +245,18 @@
             // 
             this.txtFilter.Location = new System.Drawing.Point(68, 12);
             this.txtFilter.Name = "txtFilter";
-            this.txtFilter.Size = new System.Drawing.Size(158, 21);
+            this.txtFilter.Size = new System.Drawing.Size(127, 21);
             this.txtFilter.TabIndex = 1;
             // 
-            // ToolStripMenuItem_Generator
+            // btnClear
             // 
-            this.ToolStripMenuItem_Generator.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadDataBaseToolStripMenuItem,
-            this.ToolStripMenuItem_execute});
-            this.ToolStripMenuItem_Generator.Name = "ToolStripMenuItem_Generator";
-            this.ToolStripMenuItem_Generator.Size = new System.Drawing.Size(79, 21);
-            this.ToolStripMenuItem_Generator.Text = "Generator";
-            // 
-            // loadDataBaseToolStripMenuItem
-            // 
-            this.loadDataBaseToolStripMenuItem.Name = "loadDataBaseToolStripMenuItem";
-            this.loadDataBaseToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.loadDataBaseToolStripMenuItem.Text = "LoadDataBase";
-            this.loadDataBaseToolStripMenuItem.Click += new System.EventHandler(this.loadDataBaseToolStripMenuItem_Click);
-            // 
-            // ToolStripMenuItem_execute
-            // 
-            this.ToolStripMenuItem_execute.Name = "ToolStripMenuItem_execute";
-            this.ToolStripMenuItem_execute.ShortcutKeys = System.Windows.Forms.Keys.F8;
-            this.ToolStripMenuItem_execute.Size = new System.Drawing.Size(160, 22);
-            this.ToolStripMenuItem_execute.Text = "&Execute";
-            this.ToolStripMenuItem_execute.Click += new System.EventHandler(this.ToolStripMenuItem_execute_Click);
+            this.btnClear.Image = ((System.Drawing.Image)(resources.GetObject("btnClear.Image")));
+            this.btnClear.Location = new System.Drawing.Point(199, 12);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(24, 21);
+            this.btnClear.TabIndex = 3;
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // frmMain
             // 
@@ -275,8 +300,10 @@
         private System.Windows.Forms.TextBox txtFilter;
         private System.Windows.Forms.TabControl fileTabs;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Generator;
-        private System.Windows.Forms.ToolStripMenuItem loadDataBaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_loadTables;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_execute;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_connectionStr;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 

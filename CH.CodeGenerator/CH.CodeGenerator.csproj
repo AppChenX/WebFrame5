@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionStr.cs" />
+    <Compile Include="Constant.cs" />
     <Compile Include="CustomTemplateBase.cs" />
     <Compile Include="DataProviderHelper.cs" />
     <Compile Include="frmConnection.cs">

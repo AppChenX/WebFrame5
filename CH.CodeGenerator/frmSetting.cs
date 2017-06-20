@@ -12,14 +12,14 @@ namespace CH.CodeGenerator
 {
     public partial class frmSetting : Form
     {
-        private SerializerXML<ConnectionStrs> ser = null;
+        private SerializerXML<ConnectionStrs> ser = new SerializerXML<ConnectionStrs>(Constant.xmlFileName);
         public frmSetting()
         {
             InitializeComponent();
 
             chklstbox_constr.ItemCheck += Chklstbox_constr_ItemCheck;
 
-            ser = new SerializerXML<ConnectionStrs>("config.xml");
+          
 
             //绑定数据
 
