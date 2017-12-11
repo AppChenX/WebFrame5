@@ -66,6 +66,7 @@ namespace CH.Common
             myclient.Host = host; //"SMTP.163.com";
             //SMTP服务端口
             myclient.Port = 25;
+            //myclient.UseDefaultCredentials = true;
             //验证登录
             myclient.Credentials = new NetworkCredential(this.account, this.pwd);//"@"输入有效的邮件名, "*"输入有效的密码
             myclient.Send(mymail);

@@ -211,7 +211,9 @@ namespace CH.CodeGenerator
                 {
 
                     var sp = db.DataProvider.GetSchemaProvider();
+                   
                     var schema = sp.GetSchema(db);
+
 
                     using (BackgroundWorker bk = new BackgroundWorker())
                     {
@@ -261,42 +263,59 @@ namespace CH.CodeGenerator
         private void ToolStripMenuItem_execute_Click(object sender, EventArgs e)
         {
 
-            string path = iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_templateFile, "");
 
-            string outDir = iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_outDirectory, "");
-
-            if(!File.Exists(path))
+            try
             {
-                MessageBox.Show("模板文件不存在!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                string path = iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_templateFile, "");
 
-            if (string.IsNullOrEmpty(outDir))
-            {
-                outDir = string.Format(@"{0}\{1}",Application.StartupPath, "GeneratorCode");/*Path.Combine(Application.StartupPath,"/GeneratorCode");*/
+                string outDir = iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_outDirectory, "");
 
-                if(!Directory.Exists(outDir))
+                string spaceName= iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_spaceName, "");
+
+                if (string.IsNullOrEmpty(spaceName))
                 {
-                    Directory.CreateDirectory(outDir);
+                    MessageBox.Show("实体命名空间不能为空", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
+
+                if (!File.Exists(path))
+                {
+                    MessageBox.Show("模板文件不存在!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(outDir))
+                {
+                    outDir = string.Format(@"{0}\{1}", Application.StartupPath, "GeneratorCode");/*Path.Combine(Application.StartupPath,"/GeneratorCode");*/
+
+                    if (!Directory.Exists(outDir))
+                    {
+                        Directory.CreateDirectory(outDir);
+                    }
+                }
+                //获取选中的表
+
+                var tables = chklstbx_Tables.CheckedItems.OfType<TableSchema>().ToList();
+
+
+                if (tables.Count == 0) return;
+
+                GeneraterCodeAuto(spaceName, outDir, path, tables, m => {
+
+
+                    //string path = openFile.FileName;
+
+                    //string file = path.Split(new string[] { "\\" }, StringSplitOptions.None).ToList().Last();
+                    var editor = AddNewTextEditor(m.Split(new string[] { "\\" }, StringSplitOptions.None).ToList().Last(), m);
+
+                    editor.LoadFile(m);
+                });
             }
-            //获取选中的表
-
-            var tables= chklstbx_Tables.CheckedItems.OfType<TableSchema>().ToList();
-             
-
-            if (tables.Count == 0) return;
-
-            GeneraterCodeAuto(outDir, path, tables, m => {
-
-
-                //string path = openFile.FileName;
-
-                //string file = path.Split(new string[] { "\\" }, StringSplitOptions.None).ToList().Last();
-                var editor = AddNewTextEditor(m.Split(new string[] { "\\" }, StringSplitOptions.None).ToList().Last(), m);
-
-                editor.LoadFile(m);
-            });
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+          
 
         }
 
@@ -309,7 +328,7 @@ namespace CH.CodeGenerator
         /// <param name="fileName">模板名称</param>
         /// <param name="tables"></param>
         /// <param name="generatorComplete">生成完成后</param>
-        private void GeneraterCodeAuto(string outDir,string fileName,List<TableSchema> tables,Action<string> generatorComplete)
+        private void GeneraterCodeAuto(string spaceName, string outDir,string fileName,List<TableSchema> tables,Action<string> generatorComplete)
         {
             string index = System.IO.File.ReadAllText(fileName, System.Text.Encoding.UTF8);
             var config = new TemplateServiceConfiguration();
@@ -320,9 +339,9 @@ namespace CH.CodeGenerator
 
                 foreach(var table in tables)
                 {
-                    string result = service.RunCompile(index, string.Empty, null, new { Table = table });
+                    string result = service.RunCompile(index, string.Empty, null, new { Table = table, SpaceName=spaceName });
 
-                    string rsFile = string.Format("{0}.cs",Path.Combine(outDir,table.TableName.ToUpper().ToPascal()));
+                    string rsFile = string.Format("{0}.cs",Path.Combine(outDir,string.Format("{0}.generated",table.TableName.ToPascal().ToLower())));
                     WriteFile(rsFile, result);
                     generatorComplete(rsFile);
                 } 

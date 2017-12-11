@@ -37,6 +37,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtoutDir = new System.Windows.Forms.RichTextBox();
             this.btnDir = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtSpaceName = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -54,9 +56,9 @@
             // 
             this.panel1.Controls.Add(this.flowLayoutPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 108);
+            this.panel1.Location = new System.Drawing.Point(0, 154);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(522, 33);
+            this.panel1.Size = new System.Drawing.Size(523, 33);
             this.panel1.TabIndex = 1;
             // 
             // flowLayoutPanel1
@@ -66,12 +68,12 @@
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(522, 33);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(523, 33);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(459, 3);
+            this.btnOk.Location = new System.Drawing.Point(460, 3);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(60, 25);
             this.btnOk.TabIndex = 1;
@@ -126,11 +128,30 @@
             this.btnDir.UseVisualStyleBackColor = false;
             this.btnDir.Click += new System.EventHandler(this.btnDir_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(0, 126);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "命名空间";
+            // 
+            // txtSpaceName
+            // 
+            this.txtSpaceName.Location = new System.Drawing.Point(59, 108);
+            this.txtSpaceName.Name = "txtSpaceName";
+            this.txtSpaceName.Size = new System.Drawing.Size(384, 39);
+            this.txtSpaceName.TabIndex = 8;
+            this.txtSpaceName.Text = "";
+            // 
             // frmTemplate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 141);
+            this.ClientSize = new System.Drawing.Size(523, 187);
+            this.Controls.Add(this.txtSpaceName);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtoutDir);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtPath);
@@ -163,5 +184,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox txtoutDir;
         private System.Windows.Forms.Button btnDir;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RichTextBox txtSpaceName;
     }
 }

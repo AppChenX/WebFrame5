@@ -17,7 +17,7 @@ DateTime：@DateTime.Now
 代码生成器自动生成 RazorEngine3.7.0
 */
  
-namespace CH.Model
+namespace @Model.SpaceName
 {  
   @{ 
 	 var cols = Model.Table.Columns;

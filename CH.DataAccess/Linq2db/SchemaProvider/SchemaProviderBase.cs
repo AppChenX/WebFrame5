@@ -45,7 +45,7 @@ namespace LinqToDB.SchemaProvider
 		{
 			if (options == null)
 				options = new GetSchemaOptions();
-
+            options.GetProcedures = false;
 			IncludedSchemas       = GetHashSet(options.IncludedSchemas,  options.StringComparer);
 			ExcludedSchemas       = GetHashSet(options.ExcludedSchemas,  options.StringComparer);
 			IncludedCatalogs      = GetHashSet(options.IncludedCatalogs, options.StringComparer);

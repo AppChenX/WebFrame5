@@ -217,7 +217,8 @@ namespace CH.BLL
             {
                 db.Insert<SysSiginLog>(new SysSiginLog()
                 {
-                    LocalIp = localIp,
+                    LineId =(int) new Sequence.DbGenertor().Creator().Next(),
+                LocalIp = localIp,
                     NetIp = netIp,
                     UserId = userId,
                     UserName = userName,

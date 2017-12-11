@@ -21,8 +21,11 @@ namespace CH.CodeGenerator
             string path= iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_templateFile, "");
 
             string dir= iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_outDirectory, "");
+
+            string spaceName= iniFile.GetString(Constant.ini_Section_name, Constant.ini_Section_spaceName, "");
             txtPath.Text = path;
             txtoutDir.Text = dir;
+            txtSpaceName.Text = spaceName;
         }
 
         private void btnSet_Click(object sender, EventArgs e)
@@ -50,7 +53,13 @@ namespace CH.CodeGenerator
                 return;
             }
 
-            if(!System.IO.File.Exists(txtPath.Text.Trim()))
+            if (string.IsNullOrEmpty(txtSpaceName.Text))
+            {
+                MessageBox.Show("实体命名空间不能为空", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!System.IO.File.Exists(txtPath.Text.Trim()))
             {
                 MessageBox.Show("不存在此文件模板", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -65,9 +74,12 @@ namespace CH.CodeGenerator
                 }
             }
 
+
+
             //Write a int32 value
             iniFile.WriteValue(Constant.ini_Section_name, Constant.ini_Section_templateFile, txtPath.Text);
             iniFile.WriteValue(Constant.ini_Section_name, Constant.ini_Section_outDirectory, txtoutDir.Text);
+            iniFile.WriteValue(Constant.ini_Section_name, Constant.ini_Section_spaceName, txtSpaceName.Text);
             this.DialogResult = DialogResult.OK;
         }
 

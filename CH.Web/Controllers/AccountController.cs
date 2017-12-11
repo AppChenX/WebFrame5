@@ -145,9 +145,9 @@ namespace CH.Web.Controllers
                    string url = Url.Action("PwdReset", "Account", new { token = token }, "http");
                    string content = string.Format("用户密码找回<a href=\"{0}\" target=\"_blank\">{0}</a> <br> 此链接30分钟后失效请尽快修改密码", url);
 
-                    EmailSender email = new   EmailSender("chenl_11", "bbls63152");
+                    EmailSender email = new   EmailSender("cl273168121", "admin151034");
 
-                   email.sendMail("SMTP.163.com", "chenl_11@163.com", "admin", userEmail, "", "找回密码", content, "");
+                   email.sendMail("SMTP.163.com", "cl273168121@163.com", "系统管理员", userEmail, "", "系统找回密码", content, "");
                });
 
                  return Json(msg);

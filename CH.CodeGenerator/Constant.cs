@@ -32,5 +32,9 @@ namespace CH.CodeGenerator
         /// 输出目录
         /// </summary>
         public static string ini_Section_outDirectory = "dir";
+
+
+
+        public static string ini_Section_spaceName = "MES.Entities";
     }
 }

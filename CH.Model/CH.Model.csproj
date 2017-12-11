@@ -63,6 +63,7 @@
     <Compile Include="SysMenuEx.cs" />
     <Compile Include="SysMenuEx2.cs" />
     <Compile Include="SysRoleMemberEx.cs" />
+    <Compile Include="TbTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CH.Common\CH.Common.csproj">
